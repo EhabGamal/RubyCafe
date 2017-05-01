@@ -41,5 +41,8 @@ bower.json
 # Ignore Byebug command history file.
 .byebug_history
 
+# Ignore Datadase Config
+config/database.yml
+
 # Ignore RubyMine project files
 .idea
