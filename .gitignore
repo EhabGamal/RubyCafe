@@ -43,3 +43,4 @@ bower.json
 
 # Ignore RubyMine project files
 .idea
+config/database.yml
