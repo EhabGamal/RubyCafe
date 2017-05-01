@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   # resources :categories, only: [:index, :show]
   resources :products
   resources :categories
+  resources :rooms
+
 
   # scope 'admin' do
   #   resources :categories, :products
