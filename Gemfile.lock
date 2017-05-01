@@ -1,4 +1,15 @@
 GIT
+  remote: git://github.com/thoughtbot/paperclip.git
+  revision: 093b4da18444d883de826f58628089c2f480d461
+  specs:
+    paperclip (5.1.0)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (~> 0.3.0)
+
+GIT
   remote: https://github.com/doabit/semantic-ui-sass.git
   revision: bd2e7f99bffc93709eae37a2882b4a235c411513
   specs:
@@ -47,10 +58,21 @@ GEM
       tzinfo (~> 1.1)
     arel (7.1.4)
     bcrypt (3.1.11)
+    better_errors (2.1.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
     bindex (0.5.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.2.3)
     byebug (9.0.6)
+    climate_control (0.1.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
+    coderay (1.1.1)
     concurrent-ruby (1.0.5)
+    debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.18)
@@ -75,6 +97,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.2)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
@@ -157,11 +180,14 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
+  better_errors
+  binding_of_caller
   byebug
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
   mysql2 (>= 0.3.18, < 0.5)
+  paperclip!
   puma (~> 3.0)
   rails (~> 5.0.2)
   redis (~> 3.0)
