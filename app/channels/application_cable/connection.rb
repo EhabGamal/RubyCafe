@@ -3,14 +3,15 @@ module ApplicationCable
     identified_by :current_user
 
     def connect
-      self.current_user = find_verfied_user
+      self.current_user = find_verified_user
     end
-    def find_verfied_user
-      if current_user = User.find_by(id: cookies.signed[:user_id])
-        current_user
-      else
-        reject_unauthorized_connection
-      end
+    def session
+      cookies.encrypted[Rails.application.config.session_options[:key]]
+    end
+
+    protected
+    def find_verified_user
+      User.find_by(id: session["user_id"])
     end
   end
 end

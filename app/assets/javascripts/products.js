@@ -10,4 +10,18 @@ jQuery(document).ready(function() {
         // Check dataTables documentation to learn more about
         // available options.
     });
+    $('.ui.checkbox').checkbox();
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
+});
+jQuery(document).on("turbolinks:load",function () {
+    if(!$(".products.index").length > 0){
+        return
+    }
+    App.Channels.Products.subscribe()
 });
