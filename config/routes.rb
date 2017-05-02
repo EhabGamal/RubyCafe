@@ -4,11 +4,7 @@ Rails.application.routes.draw do
   resources :users
   # resources :products, only: [:index, :show]
   # resources :categories, only: [:index, :show]
-
-
   resources :rooms
-
-
   scope 'admin' do
     resources :categories, :products
   end
