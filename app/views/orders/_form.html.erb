@@ -1,42 +1,85 @@
-<%= form_for(order) do |f| %>
-  <% if order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
-      <ul>
-      <% order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<div class="ui two column stackable grid">
+  <div class="five wide column">
+    <div class="ui fluid secondary vertical demo menu">
+      <a class="active item">
+        NAme
+        <div class="ui right buttons">
+          <div class="ui negative small button"><i class="remove icon"></i></div>
+          <div class="or"></div>
+          <div class="ui positive small button"><i class="add icon"></i></div>
+        </div>
+      </a>
+      <a class="item">
+        B
+      </a>
+      <a class="item">
+        C
+      </a>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :status %>
-    <%= f.select :status, Order.statuses.keys  %>
   </div>
-
-  <div class="field">
-    <%= f.label :note %>
-    <%= f.text_area :note %>
+  <div class="eleven wide column">
+    <div class="ui four column grid" style="height: 500px; overflow-y: auto;">
+      <% for product in Product.all %>
+          <div class="column">
+            <div class="ui fluid card">
+              <a class="ui red corner label">
+                <i class="add icon"></i>
+              </a>
+              <div class="image">
+                <div class="ui red big ribbon label">
+                  <i class="pound icon"></i> 5.99
+                </div>
+                <img src="<%= product.image %>">
+              </div>
+              <div class="content">
+                <a class="header"><%= product.name %></a>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.select :user_id, options_for_select(USer.all.map{|u|[u.username, u.id]}) %>
-  </div>
+<%= form_for(order) do |f| %>
+    <% if order.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
-  <div class="field">
-    <%= f.label :room_id %>
-    <%= f.select :room_id, options_for_select(Room.all.map{|r|[r.name, r.id]}) %>
-  </div>
+          <ul>
+            <% order.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :product_id %>
-    <%= f.select :product_id, options_for_select(Product.all.map{|p|[p.name, p.id]}) %>
-  </div>
+    <div class="field">
+      <%= f.label :status %>
+      <%= f.select :status, Order.statuses.keys  %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :note %>
+      <%= f.text_area :note %>
+    </div>
+
+    <div class="field">
+      <%= f.label :user_id %>
+      <%= f.select :user_id, options_for_select(User.all.map{|u|[u.email, u.id]}) %>
+    </div>
+
+    <div class="field">
+      <%= f.label :room_id %>
+      <%= f.select :room_id, options_for_select(Room.all.map{|r|[r.name, r.id]}) %>
+    </div>
+
+    <div class="field">
+      <%= f.label :product_ids %>
+      <%= f.collection_select :product_ids, Product.all, :id, :name, {}, { multiple: true } %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>
