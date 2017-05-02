@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :status %>
-    <%= f.number_field :status %>
+    <%= f.select :status, Order.statuses.keys  %>
   </div>
 
   <div class="field">
@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= f.label :room_id %>
-    <%= f.text_field :room_id %>
+    <%= f.select :room_id, options_for_select(Room.all.map{|r|[r.name, r.id]}) %>
   </div>
 
   <div class="field">
