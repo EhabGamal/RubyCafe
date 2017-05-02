@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= f.label :user_id %>
-    <%= f.text_field :user_id %>
+    <%= f.select :user_id, options_for_select(USer.all.map{|u|[u.username, u.id]}) %>
   </div>
 
   <div class="field">
@@ -33,7 +33,7 @@
 
   <div class="field">
     <%= f.label :product_id %>
-    <%= f.text_field :product_id %>
+    <%= f.select :product_id, options_for_select(Product.all.map{|p|[p.name, p.id]}) %>
   </div>
 
   <div class="actions">
