@@ -16,3 +16,10 @@ category = Category.create(name:'test',description:'test category')
       :available => TRUE
   )
 end
+
+10.times do |p|
+  Room.create(
+      :name =>Faker::Name.name,
+      :address => Faker::Address.full_address
+  )
+end

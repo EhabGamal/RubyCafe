@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502150004) do
+ActiveRecord::Schema.define(version: 20170502164839) do
 
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -24,12 +24,20 @@ ActiveRecord::Schema.define(version: 20170502150004) do
     t.text     "note",       limit: 65535
     t.integer  "user_id"
     t.integer  "room_id"
-    t.integer  "product_id"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.index ["product_id"], name: "index_orders_on_product_id", using: :btree
     t.index ["room_id"], name: "index_orders_on_room_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
+  end
+
+  create_table "orders_products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "amount"
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_orders_products_on_order_id", using: :btree
+    t.index ["product_id"], name: "index_orders_products_on_product_id", using: :btree
   end
 
   create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -77,9 +85,10 @@ ActiveRecord::Schema.define(version: 20170502150004) do
     t.index ["room_id"], name: "index_users_on_room_id", using: :btree
   end
 
-  add_foreign_key "orders", "products"
   add_foreign_key "orders", "rooms"
   add_foreign_key "orders", "users"
+  add_foreign_key "orders_products", "orders"
+  add_foreign_key "orders_products", "products"
   add_foreign_key "products", "categories"
   add_foreign_key "users", "rooms"
 end
