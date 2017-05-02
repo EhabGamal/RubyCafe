@@ -5,7 +5,6 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :password
       t.references :room, foreign_key: true
       t.string :ext
-
       t.timestamps
     end
   end
