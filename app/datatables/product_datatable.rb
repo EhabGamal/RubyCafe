@@ -1,7 +1,8 @@
 class ProductDatatable < AjaxDatatablesRails::Base
 
   # or define them in one pass
-  def_delegators :@view, :link_to, :h, :mailto, :edit_product_path
+  def_delegators :@view, :params, :fa_icon, :link_to, :product_path, :edit_product_path, :semantic_icon
+
 
   def sortable_columns
     # Declare strings in this format: ModelName.column_name
@@ -19,9 +20,6 @@ class ProductDatatable < AjaxDatatablesRails::Base
         'Product.description'
     ]
   end
-  def edit_product_path(record)
-    record.name
-  end
 
   private
 
@@ -36,7 +34,9 @@ class ProductDatatable < AjaxDatatablesRails::Base
           record.price,
           record.available,
           record.category.name,
-          edit_product_path(record)
+          link_to(semantic_icon('play'), product_path(record)),
+          link_to(semantic_icon('edit'), edit_product_path(record)),
+          link_to(semantic_icon('remove'),record, method: :delete)
       ]
     end
   end

@@ -12,6 +12,15 @@
 
 
 <%= semantic_flash %>
+<% if user_signed_in? %>
+    <% if current_user.isadmin %>
+        <%= render 'layouts/admin_nav' %>
+    <%else%>
+        <%= render 'layouts/user_nav' %>
+    <% end %>
+<% else %>
+    <%= render 'layouts/guest_nav' %>
+<% end %>
 
 <div class="ui container">
   <%= yield %>

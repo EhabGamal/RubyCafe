@@ -1,0 +1,21 @@
+<!-- Following Menu -->
+<div class="ui inverted large top fixed menu">
+  <div class="ui container">
+    <a class="active item" href="/">Home</a>
+    <a class="item" href="#">My Orders</a>
+    <div class="right menu">
+      <a href="/usres/<%= current_user.id %>" class="item"><%= current_user.email %></a>
+      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'ui red button' %>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar Menu -->
+<div class="ui vertical inverted sidebar menu left">
+  <a class="active item" href="/">Home</a>
+  <a class="item" href="#">My Orders</a>
+  <a href="/usres/<%= current_user.id %>" class="item"><%= current_user.email %></a>
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'item' %>
+  <%= link_to "Login", new_user_session_path, :class => 'item' %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'item' %>
+</div>
