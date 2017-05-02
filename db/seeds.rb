@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+category = Category.create(name:'test',description:'test category')
+100.times do |p|
+  Product.create(
+      :name =>Faker::Commerce.product_name,
+      :description => Faker::Lorem.paragraph(sentence_count = 3),
+      :category_id => category.id,
+      :price => Faker::Commerce.price,
+      :available => TRUE
+  )
+end
