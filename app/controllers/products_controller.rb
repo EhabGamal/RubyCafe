@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  semantic_breadcrumb "products", :products_path
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   # GET /products

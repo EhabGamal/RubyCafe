@@ -22,7 +22,7 @@ jQuery(document).ready(function() {
 });
 
 jQuery(document).on("turbolinks:load",function () {
-    if(!$(".products.index").length > 0){
+    if(!$(".products.landing").length > 0){
         return
     }
     App.Channels.Products.subscribe()
@@ -30,14 +30,13 @@ jQuery(document).on("turbolinks:load",function () {
 function toggle_available(toggle) {
     var productId=toggle.dataset.id;
     var state=(!JSON.parse(toggle.dataset.state))&1;
-    console.log(state)
 
     $.ajax({
         url: '/admin/products/'+productId+'.json',
         method:'put',
         data:{product:{available:state}},
         success:function () {
-            console.log("done")
+            toggle.dataset.state=state;
         },
         error:function () {
             console.log("error")

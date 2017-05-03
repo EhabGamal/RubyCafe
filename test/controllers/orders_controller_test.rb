@@ -5,7 +5,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     @order = orders(:one)
   end
 
-  test "should get index" do
+  test "should get landing" do
     get orders_url
     assert_response :success
   end
