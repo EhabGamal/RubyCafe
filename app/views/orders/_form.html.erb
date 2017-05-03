@@ -1,23 +1,128 @@
 <div class="ui two column stackable grid">
-  <div class="five wide column">
-    <div class="ui fluid secondary vertical demo menu">
-      <a class="active item">
-        NAme
-        <div class="ui right buttons">
-          <div class="ui negative small button"><i class="remove icon"></i></div>
-          <div class="or"></div>
-          <div class="ui positive small button"><i class="add icon"></i></div>
+  <div class="six wide column">
+    <table class="ui selectable table" id="slim">
+      <tbody>
+      <tr>
+        <td>
+          <img class="ui avatar image" src="/system/products/images/000/000/001/original/person1.png?1493757297">
+          Product Name
+        </td>
+        <td class="four wide">
+          <div class="ui mini form">
+            <div class="field">
+              <input type="number" min="1">
+            </div>
+          </div>
+        </td>
+        <td class="three wide">
+          <div class="ui buttons">
+            <div class="circular ui icon button"><i class="minus icon"></i></div>
+            <div class="circular ui icon button"><i class="add icon"></i></div>
+          </div>
+        </td>
+        <td class="two wide">
+          <div class="circular ui red icon button"><i class="remove icon"></i></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img class="ui avatar image" src="/system/products/images/000/000/001/original/person1.png?1493757297">
+          Product Name
+        </td>
+        <td class="four wide">
+          <div class="ui mini form">
+            <div class="field">
+              <input type="number" min="1">
+            </div>
+          </div>
+        </td>
+        <td class="three wide">
+          <div class="ui buttons">
+            <div class="circular ui icon button"><i class="minus icon"></i></div>
+            <div class="circular ui icon button"><i class="add icon"></i></div>
+          </div>
+        </td>
+        <td class="two wide">
+          <div class="circular ui red icon button"><i class="remove icon"></i></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img class="ui avatar image" src="/system/products/images/000/000/001/original/person1.png?1493757297">
+          Product Name
+        </td>
+        <td class="four wide">
+          <div class="ui mini form">
+            <div class="field">
+              <input type="number" min="1">
+            </div>
+          </div>
+        </td>
+        <td class="three wide">
+          <div class="ui buttons">
+            <div class="circular ui icon button"><i class="minus icon"></i></div>
+            <div class="circular ui icon button"><i class="add icon"></i></div>
+          </div>
+        </td>
+        <td class="two wide">
+          <div class="circular ui red icon button"><i class="remove icon"></i></div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <%= form_for(order) do |f| %>
+        <div class="ui form">
+          <div class="fields">
+            <div class="sixteen wide field">
+              <label>Note</label>
+              <textarea rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 121px;"></textarea>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="sixteen wide field">
+              <%= f.label :room_id %>
+              <%= f.select :room_id, options_for_select(Room.all.map{|r|[r.name, r.id]}) %>
+            </div>
+          </div>
         </div>
-      </a>
-      <a class="item">
-        B
-      </a>
-      <a class="item">
-        C
-      </a>
-    </div>
+        <div class="ui divider"></div>
+        <div class="ui grid">
+          <div class="ui fourteen wide horizontal statistics">
+            <div class="statistic">
+              <div class="label">Total</div>
+              <div class="value">
+                <i class="pound icon"></i>
+                19.99
+              </div>
+            </div>
+          </div>
+          <div class="ui two wide" style="padding-top: 14px">
+            <div class="ui positive button">Submit</div>
+          </div>
+        </div>
+    <% end %>
   </div>
-  <div class="eleven wide column">
+  <div class="ten wide column">
+    <div class="ui form">
+      <div class="three fields">
+        <div class="field">
+          <%= form_for(order) do |f| %>
+              <%= f.label :user_id %>
+              <%= f.select :user_id , options_for_select(User.all.map{|r|[r.email, r.id]}) %>
+          <% end %>
+        </div>
+        <div class="field">
+          <%= form_for(Product.new) do |f| %>
+              <%= f.label :category_id %>
+              <%= f.select :category_id , options_for_select(Category.all.map{|r|[r.name, r.id]}) %>
+          <% end %>
+        </div>
+        <div class="field">
+          <label>Search</label>
+          <input type="text" placeholder="Search">
+        </div>
+      </div>
+    </div>
     <div class="ui four column grid" style="height: 500px; overflow-y: auto;">
       <% for product in Product.all %>
           <div class="column">
@@ -41,7 +146,7 @@
   </div>
 </div>
 
-<%= form_for(order) do |f| %>
+<!-- <%= form_for(order) do |f| %>
     <% if order.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -82,4 +187,4 @@
     <div class="actions">
       <%= f.submit %>
     </div>
-<% end %>
+<% end %> -->
