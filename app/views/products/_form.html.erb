@@ -6,18 +6,12 @@
 
     <div class="field">
       <%= f.label :price %>
-      <%= f.text_field :price %>
+      <%= f.number_field :price %>
     </div>
 
     <div class="field">
       <%= f.label :category_id %>
-
-      <%= f.select(:category_id) do %>
-          <% categories_array = Category.all.map {|cat| [cat.name, cat.id]} %>
-          <% categories_array.each do |c| -%>
-              <%= content_tag(:option, c.first, value: c.last) %>
-          <% end %>
-      <% end %>
+      <%= f.select(:category_id, Category.all.collect {|c| [ c.name, c.id ] }) %>
     </div>
 
     <div class="field">

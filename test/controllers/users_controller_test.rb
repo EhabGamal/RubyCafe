@@ -5,7 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
-  test "should get index" do
+  test "should get landing" do
     get users_url
     assert_response :success
   end
