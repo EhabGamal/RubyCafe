@@ -5,7 +5,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     @category = categories(:one)
   end
 
-  test "should get index" do
+  test "should get landing" do
     get categories_url
     assert_response :success
   end

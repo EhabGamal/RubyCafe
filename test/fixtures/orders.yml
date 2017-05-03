@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: 1
+  note: MyText
+  user: one
+  room: one
+  product: one
+
+two:
+  status: 1
+  note: MyText
+  user: two
+  room: two
+  product: two

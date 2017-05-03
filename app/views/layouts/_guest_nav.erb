@@ -1,0 +1,18 @@
+<!-- Following Menu -->
+<div class="ui inverted large top fixed menu">
+  <div class="ui container">
+    <a class="active item" href="/">Home</a>
+    <div class="right menu">
+      <div class="item">
+        <%= link_to "Login", new_user_session_path, :class => 'ui button' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar Menu -->
+<div class="ui vertical inverted sidebar menu left">
+  <a class="active item" href="/">Home</a>
+  <%= link_to "Login", new_user_session_path, :class => 'item' %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'item' %>
+</div>
