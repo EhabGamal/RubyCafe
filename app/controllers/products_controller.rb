@@ -11,7 +11,10 @@ class ProductsController < ApplicationController
       format.json { render json: ProductDatatable.new(view_context) }
     end
   end
-
+  def all
+    @products = Product.all.select("id, name, price,available,category_id,description")
+    render json: {:success=>true, :message=>"List of all products",:products=>@products.map {|u| u.attributes.merge(:image_url => u.image.url)}}, :status=>200
+  end
   # GET /products/1
   # GET /products/1.json
   def show

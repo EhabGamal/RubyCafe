@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     post 'login', to: 'devise/sessions#create', as: :user_session
     delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
-  get 'products.json', to: 'pages#products', as: :products_for_user
+  get 'products', to: 'products#all', as: :products_for_user
   resources :rooms
   scope 'admin' do
     resources :categories, :products, :users
