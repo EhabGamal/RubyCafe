@@ -10,7 +10,7 @@ as :user do
   get "/sign_up" => "devise/registrations#new", as: "new_user_registration" # custom path to 
     post  "/sign_up" => "devise/registrations#create" ,as:   'user_registration'
 end
- get 'products.json', to: 'pages#products', as: :products_for_user
+ get 'products', to: 'products#all', as: :products_for_user
 resources :users
   # resources :products, only: [:index, :show]
   # resources :categories, only: [:index, :show]
