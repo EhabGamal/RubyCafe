@@ -24,8 +24,10 @@ ActiveRecord::Schema.define(version: 20170502164839) do
     t.text     "note",       limit: 65535
     t.integer  "user_id"
     t.integer  "room_id"
+    t.integer  "product_id"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.index ["product_id"], name: "index_orders_on_product_id", using: :btree
     t.index ["room_id"], name: "index_orders_on_room_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
@@ -85,6 +87,7 @@ ActiveRecord::Schema.define(version: 20170502164839) do
     t.index ["room_id"], name: "index_users_on_room_id", using: :btree
   end
 
+  add_foreign_key "orders", "products"
   add_foreign_key "orders", "rooms"
   add_foreign_key "orders", "users"
   add_foreign_key "orders_products", "orders"
