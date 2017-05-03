@@ -4,9 +4,8 @@ class PagesController < ApplicationController
   end
 
   def products
-    respond_to do |format|
-      format.json { render json: Product.all }
-    end
+    @products = Product.all.select("id, name, price,available,category_id,description")
+    render json: {:success=>true, :message=>"List of all products",:ads=>@products.map {|u| u.attributes.merge(:image_url => u.image.url)}}, :status=>200
   end
 
 end
