@@ -1,5 +1,6 @@
 var arr;
 jQuery(document).ready(function() {
+    $('.ui.accordion').accordion();
     $.ajax({
         url: "/products.json",
         success: function(data) {
