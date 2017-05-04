@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:room_id])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:room_id,:ext,:avatar])
   end
 end

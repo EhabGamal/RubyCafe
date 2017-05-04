@@ -24,16 +24,25 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(order_params)
-
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+    order_details = order_params
+    order_products_list = order_details[:product_ids].reject{|p| p.empty?}
+    order_details.delete(:product_ids)
+    ActiveRecord::Base.transaction do
+      @order = Order.create!(order_details)
+      order_products = []
+      order_products_list.each do |product_id|
+        order_products.push({:amount=>1,:order_id=>@order.id,:product_id=>product_id})
       end
+      OrdersProduct.create!(order_products)
+    end
+    respond_to do |format|
+      format.html { redirect_to @order, notice: 'Order was successfully created.' }
+      format.json { render :show, status: :created, location: @order }
+    end
+  rescue Exception => ex
+    respond_to do |format|
+      format.html { render :new }
+      format.json { render json: @order.errors, status: :unprocessable_entity }
     end
   end
 
@@ -62,13 +71,13 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def order_params
-      params.require(:order).permit(:status, :note, :user_id, :room_id, :product_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def order_params
+    params.require(:order).permit(:status, :note, :user_id, :room_id, :product_ids=>[])
+  end
 end
