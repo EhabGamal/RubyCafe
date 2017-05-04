@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: deyhmlb47
+  api_key: '485523613283539'
+  api_secret: pdO3PWKRsb6rnXM0LTotdz6TObM
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: deyhmlb47
+  api_key: '485523613283539'
+  api_secret: pdO3PWKRsb6rnXM0LTotdz6TObM
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: deyhmlb47
+  api_key: '485523613283539'
+  api_secret: pdO3PWKRsb6rnXM0LTotdz6TObM
+  enhance_image_tag: true
+  static_image_support: false

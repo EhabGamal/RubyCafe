@@ -62,3 +62,5 @@ gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
 #datatabels
 gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails'
+gem 'cloudinary'
+gem 'paperclip-cloudinary'

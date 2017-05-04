@@ -18,15 +18,19 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    semantic_breadcrumb @product.name, product_path(@product)
   end
 
   # GET /products/new
   def new
     @product = Product.new
+    semantic_breadcrumb "New", new_product_path
   end
 
   # GET /products/1/edit
   def edit
+    semantic_breadcrumb @product.name, product_path(@product)
+    semantic_breadcrumb "Edit", edit_product_path(@product)
   end
 
   # POST /products
