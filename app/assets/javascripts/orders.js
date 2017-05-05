@@ -1,5 +1,4 @@
 var arr;
-<<<<<<< HEAD
 function idsort(a, b) {
     if (a.id < b.id)
         return -1;
