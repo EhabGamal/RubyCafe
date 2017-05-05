@@ -5,6 +5,18 @@ class OrdersController < ApplicationController
   # GET /orders.json
   def index
     @orders = Order.includes([:orders_products,:products]).all
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: @orders,
+               :include => {
+                   :user =>{:only => [:email,:ext]},
+                   :room => {:only => [:name]},
+                   :orders_products => {:include => [:product]}
+               },
+               :methods => [:total]
+      }
+    end
   end
 
   # GET /orders/1
