@@ -1,4 +1,5 @@
 class RoomsController < ApplicationController
+  semantic_breadcrumb "Rooms", :rooms_path
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   # GET /rooms
@@ -10,15 +11,19 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
+    semantic_breadcrumb @room.name, room_path(@room)
   end
 
   # GET /rooms/new
   def new
     @room = Room.new
+    semantic_breadcrumb "New", new_room_path
   end
 
   # GET /rooms/1/edit
   def edit
+    semantic_breadcrumb @room.name, room_path(@room)
+    semantic_breadcrumb "Edit", edit_room_path(@room)
   end
 
   # POST /rooms
