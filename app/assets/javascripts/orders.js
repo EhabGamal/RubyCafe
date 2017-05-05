@@ -1,4 +1,5 @@
 var arr;
+<<<<<<< HEAD
 function idsort(a, b) {
     if (a.id < b.id)
         return -1;
@@ -159,6 +160,7 @@ jQuery(document).ready(function () {
 
 
     }
+
     $.ajax({
         url: "/products.json",
         success: function (data) {
@@ -174,7 +176,7 @@ jQuery(document).ready(function () {
 
 
 
-
+$('.ui.accordion').accordion();
     $('#order_room_id').attr('class', 'search selection dropdown');
     $('#product_category_id').attr('class', 'search selection dropdown');
     $('#product_category_id').attr('multiple', '');

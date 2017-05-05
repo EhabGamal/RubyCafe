@@ -1,8 +1,18 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-var table;
 jQuery(document).ready(function() {
-    table=$('#products-table').dataTable({
+    $('.message .close')
+        .on('click', function () {
+            $(this).closest('.message').transition('fade');
+        });
+
+});
+
+jQuery(document).on("turbolinks:load",function () {
+    if(!$(".products.index").length > 0){
+        return
+    }
+    $('#products-table').dataTable({
         "processing": true,
         "serverSide": true,
         "ajax": $('#products-table').data('source'),
@@ -14,17 +24,6 @@ jQuery(document).ready(function() {
         $('.ui.checkbox').checkbox();
     });
 
-    $('.message .close')
-        .on('click', function () {
-            $(this).closest('.message').transition('fade');
-        });
-
-});
-
-jQuery(document).on("turbolinks:load",function () {
-    if(!$(".products.landing").length > 0){
-        return
-    }
     App.Channels.Products.subscribe()
 });
 function toggle_available(toggle) {

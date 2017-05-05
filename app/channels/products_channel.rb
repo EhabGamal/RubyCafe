@@ -1,6 +1,7 @@
 class ProductsChannel < ApplicationCable::Channel
   def subscribed
     stream_from 'products'
+    stream_from 'products-admin'
     # stream_from "products:#{current_user.id}"
   end
 
