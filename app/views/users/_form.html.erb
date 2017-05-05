@@ -1,48 +1,48 @@
-<%= form_for user, html: { multipart: true }  do |f| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= form_for user, :html => {:class => "ui form", :multipart => true} do |f| %>
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </div>
+    <div class="field">
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
-
-  <div class="field">
-    <%= f.label :room_id %>
-    <%= f.text_field :room_id %>
-  </div>
+    <div class="field">
+      <%= f.label :room_id %>
+      <%= f.select(:room_id, Room.all.collect {|c| [c.name, c.id]}) %>
+    </div>
 
 
-<div class="field">
-<%= f.file_field :avatar %>
-</div>
+    <div class="field">
+      <%= f.file_field :avatar %>
+    </div>
 
 
-  <div class="field">
-    <%= f.label :ext %>
-    <%= f.text_field :ext %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :ext %>
+      <%= f.text_field :ext %>
+    </div>
+    <% if user.errors.any? %>
+        <div class="ui error message" style="display: block">
+          <div class="header"><%= pluralize(user.errors.count, "error") %> prohibited this user from being
+            saved:
+          </div>
+          <ul class="list">
+            <% user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="actions">
+      <%= f.submit class: "ui primary button" %>
+    </div>
 <% end %>

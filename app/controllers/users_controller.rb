@@ -1,24 +1,33 @@
 class UsersController < ApplicationController
+  semantic_breadcrumb "Users", :users_path
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+    respond_to do |format|
+      format.html
+      format.json { render json: UserDatatable.new(view_context) }
+    end
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    semantic_breadcrumb @user.name, user_path(@user)
   end
 
   # GET /users/new
   def new
     @user = User.new
+    semantic_breadcrumb "New", new_user_path
   end
 
   # GET /users/1/edit
   def edit
+    semantic_breadcrumb @user.name, user_path(@user)
+    semantic_breadcrumb "Edit", edit_user_path(@user)
   end
 
   # POST /users

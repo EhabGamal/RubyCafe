@@ -7,12 +7,18 @@ jQuery(document).ready(function() {
         });
 
 });
+products_table = null;
+jQuery(document).on("turbolinks:before-visit", function () {
+    if(products_table){
+        products_table.fnDestroy();
+    }
+});
 
 jQuery(document).on("turbolinks:load",function () {
     if(!$(".products.index").length > 0){
         return
     }
-    $('#products-table').dataTable({
+    products_table=$('#products-table').dataTable({
         "processing": true,
         "serverSide": true,
         "ajax": $('#products-table').data('source'),
