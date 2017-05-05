@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  semantic_breadcrumb "Categories", :categories_path
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   # GET /categories
@@ -10,15 +11,19 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
+    semantic_breadcrumb @category.name, category_path(@category)
   end
 
   # GET /categories/new
   def new
     @category = Category.new
+    semantic_breadcrumb "New", new_category_path
   end
 
   # GET /categories/1/edit
   def edit
+    semantic_breadcrumb @category.name, category_path(@category)
+    semantic_breadcrumb "Edit", edit_category_path(@category)
   end
 
   # POST /categories

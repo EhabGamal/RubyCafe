@@ -1,14 +1,35 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @room.name %>
-</p>
-
-<p>
-  <strong>Address:</strong>
+<div class="ui horizontal divider"><%= @room.name %></div>
+<div class="ui segment">
   <%= @room.address %>
-</p>
+</div>
+<div class="ui horizontal divider">Users</div>
+<table class="ui celled table" cellspacing="0" width="100%">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Ext</th>
+    <th>Show</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @room.users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.ext %></td>
+        <td><%= link_to semantic_icon('play'), user %></td>
+        <td><%= link_to semantic_icon('edit'), edit_user_path(user) %></td>
+        <td><%= link_to semantic_icon('remove'), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
 
-<%= link_to 'Edit', edit_room_path(@room) %> |
+<br>
+
+
+<%= link_to 'Edit', edit_room_path(@room), class: "ui primary button" %> |
 <%= link_to 'Back', rooms_path %>

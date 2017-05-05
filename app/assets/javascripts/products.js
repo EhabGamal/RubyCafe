@@ -5,22 +5,39 @@ jQuery(document).ready(function() {
         .on('click', function () {
             $(this).closest('.message').transition('fade');
         });
+        $('.menu a.item, .menu .link.item').on('click',function () {
 
+            $(this)
+                .addClass('active')
+                .closest('.ui.menu')
+                .find('.item')
+                .not($(this))
+                .removeClass('active');
+        });
+});
+products_table = null;
+jQuery(document).on("turbolinks:before-cache", function() {
+    if (products_table !== null) {
+        products_table.fnDestroy();
+        products_table = null;
+    }
 });
 
 jQuery(document).on("turbolinks:load",function () {
     if(!$(".products.index").length > 0){
         return
     }
-    $('#products-table').dataTable({
+    products_table=$('#products-table').dataTable({
         "processing": true,
         "serverSide": true,
+        "bDestroy": true,
         "ajax": $('#products-table').data('source'),
         "pagingType": "full_numbers",
         // optional, if you want full pagination controls.
         // Check dataTables documentation to learn more about
         // available options.
-    }).on('draw.dt',function (e) {
+    });
+    products_table.on('draw.dt',function (e) {
         $('.ui.checkbox').checkbox();
     });
 
