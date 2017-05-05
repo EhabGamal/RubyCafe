@@ -2,11 +2,11 @@
 <div class="ui inverted large top fixed menu">
   <div class="ui container">
     <a class="active item" href="/">Home</a>
-    <a class="item" href="/admin/products">Products</a>
-    <a class="active item" href="/admin/products">Users</a>
-    <a class="item" href="#">Manual Order</a>
+    <a class="item" href="<%= products_path %>">Products</a>
+    <a class="item" href="<%= users_path %>">Users</a>
+    <a class="item" href="<%= new_order_url %>">Manual Order</a>
     <div class="right menu">
-      <a href="/usres/<%= current_user.id %>" class="item"><%= current_user.email %></a>
+      <a href="<%= user_path current_user %>" class="item"><%= current_user.email %></a>
       <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'ui red button' %>
     </div>
   </div>
@@ -15,13 +15,11 @@
 <!-- Sidebar Menu -->
 <div class="ui vertical inverted sidebar menu left">
   <a class="active item" href="/">Home</a>
-  <a class="item" href="/admin/products">Products</a>
-  <a class="active item" href="/admin/products">Users</a>
-  <a class="item" href="#">Manual Order</a>
-
-  <a href="/usres/<%= current_user.id %>" class="item"><%= current_user.email %></a>
+  <a class="item" href="<%= products_path %>">Products</a>
+  <a class="item" href="<%= users_path %>">Users</a>
+  <a class="item" href="<%= new_order_url %>">Manual Order</a>
+  <a href="<%= user_path current_user %>" class="item"><%= current_user.email %></a>
   <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'item' %>
-
   <%= link_to "Login", new_user_session_path, :class => 'item' %>
   <%= link_to "Sign up", new_user_registration_path, :class => 'item' %>
 

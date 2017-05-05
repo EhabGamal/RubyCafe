@@ -16,9 +16,10 @@ jQuery(document).ready(function() {
         });
 });
 products_table = null;
-jQuery(document).on("turbolinks:before-visit", function () {
-    if(products_table){
+jQuery(document).on("turbolinks:before-cache", function() {
+    if (products_table !== null) {
         products_table.fnDestroy();
+        products_table = null;
     }
 });
 
@@ -29,12 +30,14 @@ jQuery(document).on("turbolinks:load",function () {
     products_table=$('#products-table').dataTable({
         "processing": true,
         "serverSide": true,
+        "bDestroy": true,
         "ajax": $('#products-table').data('source'),
         "pagingType": "full_numbers",
         // optional, if you want full pagination controls.
         // Check dataTables documentation to learn more about
         // available options.
-    }).on('draw.dt',function (e) {
+    });
+    products_table.on('draw.dt',function (e) {
         $('.ui.checkbox').checkbox();
     });
 

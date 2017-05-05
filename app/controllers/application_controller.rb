@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  semantic_breadcrumb "Home", :root_path
+  before_filter :authenticate_user!
+  # semantic_breadcrumb "Home", :root_path
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   protected
