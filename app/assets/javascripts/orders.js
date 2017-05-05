@@ -41,7 +41,12 @@ jQuery(document).ready(function () {
 
         }
 
+ this.productids= function(){
 
+return Object.keys(this.productsids)
+
+
+ }
         this.decrementproduct = function (prodid) {
 
             if (this.productsids[prodid] > 1) {
@@ -70,7 +75,17 @@ jQuery(document).ready(function () {
         this.products = products || [];
         this.category = category || "";
         this.searchterms = searchterms || "";
-        this.sources = { manager: "#slim", products: "#productdiv", value: "#valuepound", searchbox: "#searchbox", categories: "#product_category_id" }
+        this.sources = {
+            manager: "#slim",
+            products: "#productdiv",
+            value: "#valuepound",
+            searchbox: "#searchbox",
+            categories: "#product_category_id",
+            submitbutton: "#submitbutton",
+            mainform: "#mainform",
+            userform: "#userform"
+
+        }
         this.corder = order || {};
         self = this
         this.setproducts = function (prodarray) {
@@ -123,7 +138,31 @@ jQuery(document).ready(function () {
 
 
         }
+        this.submithandler = function (event) {
+            console.log("IN")
+function getmintemp(main){
+            return innertemp=function(key,value,isArray=false){
+                this.name=`${main}[${key}]`+(isArray?"[]":"");
+                this.value=value
 
+            }
+
+}
+            ordertemp=getmintemp('order');
+
+           var mainform= $(self.sources.mainform).serializeArray()
+           mainform.push($(self.sources.userform).serializeArray().pop())
+          // mainform.push(new ordertemp('note',''))
+            mainform.push(new ordertemp('status','pending'))
+            ids=self.corder.productids();
+            console.log(self.corder)
+            console.log(ids);
+            ids.forEach((val,indx)=>{mainform.push(new ordertemp('product_ids',val,true))})
+           console.log(mainform)
+           $.post('/orders',mainform)
+
+
+        }
         this.decrmproduct = function () {
             prodid = String($(this).data('prodid')).match(/[0-9]+$/)[0]
             locatelm = self.products.find((elem, ind) => elem.id == prodid)
@@ -213,6 +252,8 @@ jQuery(document).ready(function () {
             $(this.sources.searchbox).on('input', this.buildproducts.bind(this))
             $(this.sources.categories).change(this.buildproducts.bind(this))
             console.log($(this.sources.products))
+            $(this.sources.submitbutton).click(this.submithandler)
+
             //console.log(this.templates.producttemplate({'name':'kkk','price':'23','image':'kkk'}))
 
 
