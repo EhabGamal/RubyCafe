@@ -1,3 +1,6 @@
+
+require 'json'
+
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
@@ -42,8 +45,9 @@ class OrdersController < ApplicationController
     ActiveRecord::Base.transaction do
       @order = Order.create!(order_details)
       order_products = []
-      order_products_list.each do |product_id|
-        order_products.push({:amount=>1,:order_id=>@order.id,:product_id=>product_id})
+      order_products_list.each do |product|
+        product=JSON.parse(product)
+        order_products.push({:amount=>product['size'],:order_id=>@order.id,:product_id=>product['id']})
       end
       OrdersProduct.create!(order_products)
     end

@@ -41,12 +41,12 @@ jQuery(document).ready(function () {
 
         }
 
- this.productids= function(){
+        this.productids = function () {
 
-return Object.keys(this.productsids)
+            return Object.keys(this.productsids)
 
 
- }
+        }
         this.decrementproduct = function (prodid) {
 
             if (this.productsids[prodid] > 1) {
@@ -140,26 +140,26 @@ return Object.keys(this.productsids)
         }
         this.submithandler = function (event) {
             console.log("IN")
-function getmintemp(main){
-            return innertemp=function(key,value,isArray=false){
-                this.name=`${main}[${key}]`+(isArray?"[]":"");
-                this.value=value
+            function getmintemp(main) {
+                return innertemp = function (key, value, isArray = false) {
+                    this.name = `${main}[${key}]` + (isArray ? "[]" : "");
+                    this.value = value
+
+                }
 
             }
+            ordertemp = getmintemp('order');
 
-}
-            ordertemp=getmintemp('order');
-
-           var mainform= $(self.sources.mainform).serializeArray()
-           mainform.push($(self.sources.userform).serializeArray().pop())
-          // mainform.push(new ordertemp('note',''))
-            mainform.push(new ordertemp('status','pending'))
-            ids=self.corder.productids();
+            var mainform = $(self.sources.mainform).serializeArray()
+            mainform.push($(self.sources.userform).serializeArray().pop())
+            // mainform.push(new ordertemp('note',''))
+            mainform.push(new ordertemp('status', 'pending'))
+            ids = self.corder.productids();
             console.log(self.corder)
             console.log(ids);
-            ids.forEach((val,indx)=>{mainform.push(new ordertemp('product_ids',val,true))})
-           console.log(mainform)
-           $.post('/orders',mainform)
+            ids.forEach((val, indx) => { mainform.push(new ordertemp('product_ids', JSON.stringify({id:val,size:self.corder.productvalue(val)}), true)) })
+            console.log(mainform)
+            $.post('/orders', mainform)
 
 
         }
@@ -292,7 +292,7 @@ function getmintemp(main){
 
 
 
-    $('.ui.accordion').accordion({selector: {trigger: '.title .icon'}});
+    $('.ui.accordion').accordion({ selector: { trigger: '.title .icon' } });
     $('#order_room_id').attr('class', 'search selection dropdown');
     $('#product_category_id').attr('class', 'search selection dropdown');
     $('#product_category_id').attr('multiple', '');
@@ -307,14 +307,14 @@ function getmintemp(main){
 
 
     orderHeaders = [
-        {key:'created_at', icon:'wait'},
-        {key:'user.email', icon:'user'},
-        {key:'room.name', icon:'marker'},
-        {key:'user.ext', icon:'volume control phone'},
-        {key:'total', icon:'pound'},
+        { key: 'created_at', icon: 'wait' },
+        { key: 'user.email', icon: 'user' },
+        { key: 'room.name', icon: 'marker' },
+        { key: 'user.ext', icon: 'volume control phone' },
+        { key: 'total', icon: 'pound' },
     ];
-    Object.byString = (obj, str)=>{
-        str.split('.').forEach((x)=>{obj = obj[x]});
+    Object.byString = (obj, str) => {
+        str.split('.').forEach((x) => { obj = obj[x] });
         return obj;
     };
 
@@ -331,8 +331,8 @@ function getmintemp(main){
               </div>
             </div>
             `;
-            orderHeaders.forEach((val)=>{
-                console.log(temp({icon:val.icon,key:Object.byString(ordersList[0],val.key)}))
+            orderHeaders.forEach((val) => {
+                console.log(temp({ icon: val.icon, key: Object.byString(ordersList[0], val.key) }))
             })
         },
         error: function (error) {
