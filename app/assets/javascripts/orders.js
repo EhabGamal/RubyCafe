@@ -1,5 +1,5 @@
 var arr;
-<<<<<<< HEAD
+var ordersList = [];
 function idsort(a, b) {
     if (a.id < b.id)
         return -1;
@@ -32,8 +32,8 @@ jQuery(document).ready(function () {
             {
 
 
-        this.productsids.push(prodid)
-              return true;
+                this.productsids.push(prodid)
+                return true;
             }
             return false;
 
@@ -112,7 +112,15 @@ jQuery(document).ready(function () {
           <div class="removeord circular ui red icon button"><i class="remove icon"></i></div>
         </td>
       </tr>
-      <tr>`
+      <tr>`,
+            orderHeaderTemplate: repl`
+            <div class="item">
+              <i class="${'icon'} large icon"></i>
+              <div class="content">
+                <div class="header">${'key'}</div>
+              </div>
+            </div>
+            `
 
         }
         this.buildproducts = function () {
@@ -176,7 +184,7 @@ jQuery(document).ready(function () {
 
 
 
-$('.ui.accordion').accordion();
+    $('.ui.accordion').accordion({selector: {trigger: '.title .icon'}});
     $('#order_room_id').attr('class', 'search selection dropdown');
     $('#product_category_id').attr('class', 'search selection dropdown');
     $('#product_category_id').attr('multiple', '');
@@ -190,5 +198,38 @@ $('.ui.accordion').accordion();
 
 
 
+    orderHeaders = [
+        {key:'created_at', icon:'wait'},
+        {key:'user.email', icon:'user'},
+        {key:'room.name', icon:'marker'},
+        {key:'user.ext', icon:'volume control phone'},
+        {key:'total', icon:'pound'},
+    ];
+    Object.byString = (obj, str)=>{
+        str.split('.').forEach((x)=>{obj = obj[x]});
+        return obj;
+    };
+
+    $.ajax({
+        url: "/orders.json",
+        success: function (data) {
+            ordersList = data;
+            console.log(ordersList);
+            temp = repl`
+            <div class="item">
+              <i class="${'icon'} large icon"></i>
+              <div class="content">
+                <div class="header">${'key'}</div>
+              </div>
+            </div>
+            `;
+            orderHeaders.forEach((val)=>{
+                console.log(temp({icon:val.icon,key:Object.byString(ordersList[0],val.key)}))
+            })
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
 });
 
