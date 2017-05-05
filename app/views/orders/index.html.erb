@@ -1,33 +1,107 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Orders</h1>
+<h1><%= @orders.count %> Pending Orders</h1>
 
+<div class="ui styled fluid accordion">
+  <% @orders.each do |order| %>
+      <div class="title active">
+        <i class="dropdown icon"></i>
+        <div class="ui big horizontal list">
+          <div class="item">
+            <i class="wait large icon"></i>
+            <div class="content">
+              <div class="header"><%= time_ago_in_words(order.created_at) %></div>
+            </div>
+          </div>
+          <div class="item">
+            <i class="user large icon"></i>
+            <div class="content">
+              <div class="header"><%= order.user.email %></div>
+            </div>
+          </div>
+          <div class="item">
+            <i class="marker large icon"></i>
+            <div class="content">
+              <div class="header"><%= order.room.name %></div>
+            </div>
+          </div>
+          <div class="item">
+            <i class="volume control phone large icon"></i>
+            <div class="content">
+              <div class="header"><%= order.user.ext %></div>
+            </div>
+          </div>
+          <div class="item">
+            <i class="pound large red icon"></i>
+            <div class="content">
+              <div class="ui red tag large label"><%= number_to_currency(order.total, :unit => "") %></div>
+            </div>
+          </div>
+        </div>
+        <div class="ui right floated large buttons">
+          <button class="ui red button">Start</button>
+          <div class="or"></div>
+          <button class="ui positive button">Done</button>
+        </div>
+      </div>
+      <div class="content active">
+        <div class="ui six column grid">
+          <% for p in order.orders_products %>
+              <div class="column">
+                <div class="ui fluid card">
+                  <div class="image">
+                    <div class="ui red big ribbon label">
+                      <i class="hashtag icon"></i> <%= p.amount %>
+                    </div>
+                    <img src="http://lorempixel.com/200/200/">
+                  </div>
+                  <div class="content">
+                    <a class="header"><%= p.product.name %></a>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<!--
 <table>
   <thead>
-    <tr>
-      <th>Status</th>
-      <th>Note</th>
-      <th>User</th>
-      <th>Room</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Status</th>
+    <th>Note</th>
+    <th>User</th>
+    <th>Ext</th>
+    <th>Room</th>
+    <th>Date</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @orders.each do |order| %>
+  <% @orders.each do |order| %>
       <tr>
         <td><%= order.status %></td>
         <td><%= order.note %></td>
-        <td><%= order.user %></td>
-        <td><%= order.room %></td>
+        <td><%= order.user.email %></td>
+        <td><%= order.user.ext %></td>
+        <td><%= order.room.name %></td>
+        <td><%= time_ago_in_words(order.created_at) %></td>
         <td><%= link_to 'Show', order %></td>
         <td><%= link_to 'Edit', edit_order_path(order) %></td>
         <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      <tr>
+        <td colspan="9">
+            <% order.orders_products.each do |p| %>
     <% end %>
+        </td>
+      </tr>
+  <% end %>
   </tbody>
 </table>
-
-<br>
+-->
 
 <%= link_to 'New Order', new_order_path %>
