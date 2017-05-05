@@ -1,9 +1,10 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 users_table = null;
-jQuery(document).on("turbolinks:before-visit", function () {
-    if(users_table){
+jQuery(document).on("turbolinks:before-cache", function() {
+    if (users_table !== null) {
         users_table.fnDestroy();
+        users_table = null;
     }
 });
 jQuery(document).on("turbolinks:load", function () {
@@ -18,9 +19,6 @@ jQuery(document).on("turbolinks:load", function () {
         // optional, if you want full pagination controls.
         // Check dataTables documentation to learn more about
         // available options.
-    }).on('draw.dt', function (e) {
-        $('.ui.checkbox').checkbox();
     });
-
 
 });

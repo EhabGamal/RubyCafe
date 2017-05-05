@@ -9,7 +9,7 @@ class Order < ApplicationRecord
   def total
     total = 0
     self.orders_products.each do |p|
-      total += p.amount * p.product.price
+      total += p.amount.to_f * p.product.price.to_f
     end
     total
   end
