@@ -6,12 +6,14 @@
     
       </tbody>
     </table>
-    <%= form_for(order) do |f| %>
+    <%= form_for(order,:html => { :id => "mainform" })  do |f| %>
         <div class="ui form">
           <div class="fields">
             <div class="sixteen wide field">
-              <label>Note</label>
-              <textarea rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 121px;"></textarea>
+            <div class="field">
+              <%= f.label :note %>
+              <%= f.text_area :note %>
+             </div>
             </div>
           </div>
           <div class="fields">
@@ -28,12 +30,12 @@
               <div class="label">Total</div>
               <div class="value" >
                 <i class="pound icon"></i>
-                <span id="valuepound"> 0.00 <span>
+                <span id="valuepound"> 0.00 </span>
               </div>
             </div>
           </div>
           <div class="ui two wide" style="padding-top: 14px">
-            <div class="ui positive button">Submit</div>
+            <div class="ui positive button" id="submitbutton">Submit</div>
           </div>
         </div>
     <% end %>
@@ -42,7 +44,7 @@
     <div class="ui form">
       <div class="three fields">
         <div class="field">
-          <%= form_for(order) do |f| %>
+          <%= form_for(order,:html => { :id => "userform" }) do |f| %>
               <%= f.label :user_id %>
               <%= f.select :user_id , options_for_select(User.all.map{|r|[r.email, r.id]}) %>
           <% end %>
