@@ -1,14 +1,33 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @category.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
+<div class="ui horizontal divider"><%= @category.name %></div>
+<div class="ui segment">
   <%= @category.description %>
-</p>
+</div>
+<div class="ui horizontal divider">Products</div>
+<table class="ui celled table" cellspacing="0" width="100%">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Show</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @category.products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.price %></td>
+        <td><%= link_to semantic_icon('play'), product %></td>
+        <td><%= link_to semantic_icon('edit'), edit_product_path(product) %></td>
+        <td><%= link_to semantic_icon('remove'), product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
 
-<%= link_to 'Edit', edit_category_path(@category) %> |
+<br>
+
+
+<%= link_to 'Edit', edit_category_path(@category), class: "ui primary button" %> |
 <%= link_to 'Back', categories_path %>

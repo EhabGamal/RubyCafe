@@ -16,10 +16,8 @@ resources :users
   # resources :categories, only: [:index, :show]
 
   resources :orders
-
-  resources :rooms
   scope 'admin' do
-    resources :categories, :products, :users
+    resources :categories, :products, :users,:rooms
   end
   root :to => 'pages#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
