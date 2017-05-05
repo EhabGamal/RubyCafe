@@ -92,7 +92,7 @@
               <div class="label">Total</div>
               <div class="value">
                 <i class="pound icon"></i>
-                19.99
+                <div id="valuepound">19.99</div>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
         </div>
     <% end %>
   </div>
-  <div class="ten wide column">
+  <div  class="ten wide column">
     <div class="ui form">
       <div class="three fields">
         <div class="field">
@@ -119,29 +119,12 @@
         </div>
         <div class="field">
           <label>Search</label>
-          <input type="text" placeholder="Search">
+          <input type="text" id="searchbox" placeholder="Search">
         </div>
       </div>
     </div>
-    <div class="ui four column grid" style="height: 500px; overflow-y: auto;">
-      <% for product in Product.all %>
-          <div class="column">
-            <div class="ui fluid card">
-              <a class="ui red corner label">
-                <i class="add icon"></i>
-              </a>
-              <div class="image">
-                <div class="ui red big ribbon label">
-                  <i class="pound icon"></i> 5.99
-                </div>
-                <img src="<%= product.image %>">
-              </div>
-              <div class="content">
-                <a class="header"><%= product.name %></a>
-              </div>
-            </div>
-          </div>
-      <% end %>
+    <div  id="productdiv" class="ui four column grid" style="height: 500px; overflow-y: auto;">
+   
     </div>
   </div>
 </div>
