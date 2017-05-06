@@ -7,7 +7,7 @@ class Product < ApplicationRecord
   validates_attachment :image, content_type: {content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"]}
   after_commit -> {ProductRelayJob.perform_later(self, "create")}, on: :create
   after_commit -> {ProductRelayJob.perform_later(self, "update")}, on: :update
-  before_destroy -> {ProductRelayJob.perform_later(self, "destroy")}, on: :destroy
+  before_destroy -> {ProductRelayJob.perform_later(self, "destroy")}
   validates :name, :price, :category_id, presence: true
   validates :name, uniqueness: true
 end

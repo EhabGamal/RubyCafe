@@ -1,29 +1,47 @@
-<p id="notice"><%= notice %></p>
+<div class="ui piled segment">
+<div class="ui header"><%= @product.name%></div>
+<div class="ui centered two column grid">
+  <div class="center aligned column">
+    <div class="ui tall stacked segment">
+      <img src="<%= @product.image.url %>" alt="" class="ui medium centered rounded image">
 
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui tall stacked segment">
+      <div class="ui two column grid">
+        <div class="column">
+          <div class="ui tiny statistic">
+            <div class="value">
+              <i class="pound icon"></i>
+              <span> <%= @product.price %> </span>
+            </div>
+          </div>
+        </div>
 
-<p>
-  <strong>Price:</strong>
-  <%= @product.price %>
-</p>
+        <div class="column">
+          <% if @product.available %>
+              <div class="ui tiny statistic">
+                <div class="value">
+                  <i class="check icon"></i>
+                  <span> Available</span>
+                </div>
+              </div>
+          <% end %>
+        </div>
 
-<p>
-  <strong>Category:</strong>
-  <%= @product.category %>
-</p>
+      </div>
+      <div class="ui header">Category: <%= link_to @product.category.name,@product.category %></div>
+      <div class="ui header">Description</div>
+      <p><%= @product.description %></p>
+      <% if current_user.isadmin %>
+      <div class="ui two buttons">
+        <%= link_to 'Edit', edit_product_path(@product),class: "ui primary button" %> |
+        <%= link_to 'Back', products_path,class: "ui basic blue button" %>
 
-<p>
-  <strong>Available:</strong>
-  <%= @product.available %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @product.description %>
-</p>
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</div>
