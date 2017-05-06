@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     get '/sign_up' => 'devise/registrations#new', as: :new_user_registration # custom path to
     post '/sign_up' => 'devise/registrations#create', as: :user_registration
   end
-  get 'users/:id/orders', to: 'users#orders'
+  get 'users/:id/orders', to: 'users#orders',as: :orders_for_user
   get 'allproducts.json', to: 'products#all', as: :products_for_user
   resources :categories, :products, :users, :rooms,:orders
   get 'checks', to: 'orders#checks', as: :orders_checks

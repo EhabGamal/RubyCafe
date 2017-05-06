@@ -2,7 +2,7 @@
 <div class="ui inverted large top fixed menu">
   <div class="ui container">
     <a class="active item" href="/">Home</a>
-    <a class="item" href="#">My Orders</a>
+    <a class="item" href="<%= orders_for_user_path current_user%>">My Orders</a>
     <div class="right menu">
       <a href="#" class="item"><%= current_user.email %></a>
       <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'ui red button' %>

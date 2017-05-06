@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   # GET /users/orders.json
   def orders
     @user = User.includes([orders: [orders_products: :product]]).find(params[:id])
+    redirect_to :root, :flash => { :error => "you are not authorized to access" }  unless current_user.id==@user.id
     respond_to do |format|
       format.html
       format.json {
@@ -100,7 +101,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :room_id, :ext,:avatar)
+      params.require(:user).permit(:name, :email, :password, :room_id, :ext,:avatar,:isadmin)
     end
   protected
   def check_access

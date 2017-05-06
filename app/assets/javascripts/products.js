@@ -24,8 +24,9 @@ jQuery(document).on("turbolinks:before-cache", function () {
 });
 
 jQuery(document).on("turbolinks:load", function () {
-    if ($(".orders.new").length > 0)
+    if ($(".orders.new").length > 0){
         App.Channels.Products.subscribe()
+    }
     if (!$(".products.index").length > 0) {
         return
     }
