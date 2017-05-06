@@ -13,4 +13,6 @@ class Order < ApplicationRecord
     end
     total
   end
+
+  after_commit -> {OrderJob.perform_later(self, "update")}, on: :update
 end
