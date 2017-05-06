@@ -10,6 +10,11 @@ as :user do
   get "/sign_up" => "devise/registrations#new", as: "new_user_registration" # custom path to 
     post  "/sign_up" => "devise/registrations#create" ,as:   'user_registration'
 end
+resources :users do
+  member do
+    get 'orders'
+  end
+end
  get 'products', to: 'products#all', as: :products_for_user
 resources :users
   # resources :products, only: [:index, :show]
@@ -18,6 +23,7 @@ resources :users
   resources :orders
   scope 'admin' do
     resources :categories, :products, :users,:rooms
+    get 'checks', to: 'orders#checks', as: :orders_checks
   end
   root :to => 'pages#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

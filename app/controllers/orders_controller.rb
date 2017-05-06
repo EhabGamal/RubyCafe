@@ -1,10 +1,13 @@
+
+require 'json'
+
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.includes([:orders_products,:products]).all
+    @orders = Order.includes([:orders_products,:products]).where(status:['processing','pending'])
     respond_to do |format|
       format.html
       format.json {
@@ -15,6 +18,27 @@ class OrdersController < ApplicationController
                    :orders_products => {:include => [:product]}
                },
                :methods => [:total]
+      }
+    end
+  end
+
+  # GET /checks
+  # GET /checks.json
+  def checks
+    @users = User.includes([orders: [orders_products: :product]])
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: @users,
+               :include => {
+                   :orders =>{
+                       :include => {
+                           :orders_products => {:include => [:product]}
+                       },
+                       :methods => :total
+                   }
+               },
+               :methods => :orders_total
       }
     end
   end
@@ -42,8 +66,9 @@ class OrdersController < ApplicationController
     ActiveRecord::Base.transaction do
       @order = Order.create!(order_details)
       order_products = []
-      order_products_list.each do |product_id|
-        order_products.push({:amount=>1,:order_id=>@order.id,:product_id=>product_id})
+      order_products_list.each do |product|
+        product=JSON.parse(product)
+        order_products.push({:amount=>product['size'],:order_id=>@order.id,:product_id=>product['id']})
       end
       OrdersProduct.create!(order_products)
     end
