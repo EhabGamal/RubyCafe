@@ -442,15 +442,12 @@ if($(".orders.index").length>0){
            }
 
 });
-    window.addEventListener('order_created_new', function (e) { 
-
-           if(e.detail.status=='canceled')
-           {
- $('#order_' + id + '_title').remove();
-        $('#order_' + id + '_content').remove();
-               
-           }
-
+    window.addEventListener('order_create_new', function (e) { 
+console.log("Jezebel")
+      
+ $('.mainorddiv').append(e.detail.html);
+   //     $('#order_' + id + '_content').remove();
+          
 });
 
 }

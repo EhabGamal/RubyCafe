@@ -27,7 +27,8 @@ App.Channels.Orders.subscribe = function() {
            
         }
          else if(data.action=='create'){
-                 event=new CustomEvent('order_create_new',{'detail':data.order});
+             console.log("it's on")
+                 event=new CustomEvent('order_create_new',{'detail':{obj:data.order,html:data.html}});
                  window.dispatchEvent(event);
 
            
