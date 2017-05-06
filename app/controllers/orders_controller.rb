@@ -76,7 +76,7 @@ class OrdersController < ApplicationController
     html = ApplicationController.render :partial => 'orders/order', :locals => { :order => @order }
     ActionCable.server.broadcast "orders:#{current_user.id}",{order:@order,action:"create",html: html}
     respond_to do |format|
-      format.html { redirect_to @order, notice: 'Order was successfully created.' }
+      format.html { redirect_to root_path, notice: 'Order was successfully created.' }
       format.json { render :show, status: :created, location: @order }
     end
   rescue Exception => ex
@@ -84,6 +84,7 @@ class OrdersController < ApplicationController
       format.html { render :new }
       format.json { render json: @order.errors, status: :unprocessable_entity }
     end
+
   end
 
   # PATCH/PUT /orders/1

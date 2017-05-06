@@ -28,6 +28,9 @@ function repl(strings, ...keys) {
 
 var main_manager;
 
+
+
+jQuery(document).on("turbolinks:load",function(){
 jQuery(document).ready(function () {
     var order = new function () {
         this.productsids = {};
@@ -324,7 +327,7 @@ jQuery(document).ready(function () {
 
 
     $.ajax({
-        url: "/products.json",
+        url: "/allproducts.json",
         success: function (data) {
             //console.log(data);
             arr = data.products
@@ -486,4 +489,4 @@ console.log("Jezebel")
         }
     });
 });
-
+})

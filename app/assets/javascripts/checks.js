@@ -1,4 +1,9 @@
 
+
+
+
+
+jQuery(document).on("turbolinks:load",function(){
 jQuery(document).ready(function () {
 
    
@@ -120,4 +125,5 @@ allts[e.detail.status]({'id':e.detail.id})
 
 
     }
+})
 })
