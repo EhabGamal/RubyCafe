@@ -157,7 +157,7 @@ jQuery(document).ready(function () {
             ids = self.corder.productids();
             console.log(self.corder)
             console.log(ids);
-            ids.forEach((val, indx) => { mainform.push(new ordertemp('product_ids', JSON.stringify({id:val,size:self.corder.productvalue(val)}), true)) })
+            ids.forEach((val, indx) => { mainform.push(new ordertemp('product_ids', JSON.stringify({ id: val, size: self.corder.productvalue(val) }), true)) })
             console.log(mainform)
             $.post('/orders', mainform)
 
@@ -313,6 +313,111 @@ jQuery(document).ready(function () {
         { key: 'user.ext', icon: 'volume control phone' },
         { key: 'total', icon: 'pound' },
     ];
+
+
+
+    var temps = {
+
+        endbtn: repl`<button class="ui positive button endorder" data-itemid=${'id'} >Done</button>`
+
+
+    }
+
+    console.log("LLLL")
+    function sucesscallback(itemt) {
+         console.log(itemt);
+        // console.log("AGAAAIAN")
+        console.log("HI");
+        $(itemt).replaceWith($(temps.endbtn({ 'id': $(itemt).data('itemid') })))
+
+
+
+    }
+
+
+    function completecallback(itemt) {
+
+        var id = $(itemt).data('itemid')
+console.log(id);
+        $('#order_'+ id + '_title').remove();
+        $('#order_' + id + '_content').remove();
+
+
+    }
+
+
+
+
+
+    function changeorderstate(id, state, callback,itemt) {
+
+        console.log("INCH", id, state)
+        $.ajax({
+            type: "PUT",
+            url: `/orders/${id}.json`,
+            data: { order: { status: state } },
+            dataType: 'json',
+            success: function (msg) {
+                callback(itemt);
+            },
+            error: function (d) { console.log("LLLLLLL") },
+            complete: function (d) { console.log("MESSSSSS") }
+        });
+
+    }
+    function todone() {
+        console.log("INDONE")
+        changeorderstate($(this).data('itemid'), 'processing', sucesscallback,this)
+
+
+
+    }
+    function tocompleted() {
+        console.log("COMPLETED")
+        changeorderstate($(this).data('itemid'), 'completed', completecallback,this)
+    }
+
+
+
+    $(".mainorddiv").on("click", '.startorder', todone)
+    $(".mainorddiv").on("click", '.endorder', tocompleted)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     Object.byString = (obj, str) => {
         str.split('.').forEach((x) => { obj = obj[x] });
         return obj;

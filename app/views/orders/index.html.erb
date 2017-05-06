@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= @orders.count %> Pending Orders</h1>
-<!--
-<div class="ui styled fluid accordion">
+
+<div class="ui styled fluid accordion mainorddiv">
   <% @orders.each do |order| %>
-      <div class="title">
+      <div class="title" id="order_<%=order.id%>_title">
         <i class="dropdown icon"></i>
         <div class="ui big horizontal list">
           <div class="item">
@@ -39,12 +39,15 @@
           </div>
         </div>
         <div class="ui right floated large buttons">
-          <button class="ui red button">Start</button>
-          <div class="or"></div>
-          <button class="ui positive button">Done</button>
+        <%= order.status %>
+        <% if order.status=='pending' %>
+          <button class="ui red button startorder" data-itemid=<%=order.id%> >Start</button>
+       <% else %>
+          <button class="ui positive button endorder" data-itemid=<%=order.id%> >Done</button>
+          <%end%>
         </div>
       </div>
-      <div class="content">
+      <div class="content" id="order_<%=order.id%>_content">
         <div class="ui six column grid">
           <% for p in order.orders_products %>
               <div class="column">
@@ -65,7 +68,7 @@
       </div>
   <% end %>
 </div>
--->
+
 <div class="ui styled fluid accordion">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -125,8 +128,8 @@
     </div>
   </div>
 </div>
-
 <!--
+
 <table>
   <thead>
   <tr>

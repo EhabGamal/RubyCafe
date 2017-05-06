@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.includes([:orders_products,:products]).all
+    @orders = Order.includes([:orders_products,:products]).where(status:['processing','pending'])
     respond_to do |format|
       format.html
       format.json {
