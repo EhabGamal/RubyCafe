@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  before_action :check_access
   semantic_breadcrumb "Categories", :categories_path
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
@@ -76,4 +77,8 @@ class CategoriesController < ApplicationController
     def category_params
       params.require(:category).permit(:name, :description)
     end
+  protected
+  def check_access
+    redirect_to :root, :flash => { :error => "you are not authorized to access" } and return unless current_user.isadmin
+  end
 end
