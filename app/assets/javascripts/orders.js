@@ -1,3 +1,10 @@
+jQuery(document).on("turbolinks:load",function () {
+    if(!$(".orders.index").length > 0){
+        return
+    }
+    App.Channels.Orders.subscribe()
+});
+
 var arr;
 var ordersList = [];
 function idsort(a, b) {

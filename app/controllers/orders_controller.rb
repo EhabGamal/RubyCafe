@@ -72,6 +72,7 @@ class OrdersController < ApplicationController
       end
       OrdersProduct.create!(order_products)
     end
+    OrderJob.perform_later(@order, "create")
     respond_to do |format|
       format.html { redirect_to @order, notice: 'Order was successfully created.' }
       format.json { render :show, status: :created, location: @order }
