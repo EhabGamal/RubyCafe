@@ -428,14 +428,30 @@ jQuery(document).ready(function () {
     $(".mainorddiv").on("click", '.startorder', todone)
     $(".mainorddiv").on("click", '.endorder', tocompleted)
 
+console.log("KKK",$(".orders.index").length)
+if($(".orders.index").length>0){
+     App.Channels.Orders.subscribe()
+    console.log("slimshady");
+    window.addEventListener('order_updated_state', function (e) { 
 
-if($(".mainorddiv").length>0){
-window.addEventListener('order_updated_state', function (e) { 
-
-console.log('updated')
+           if(e.detail.status=='canceled')
+           {
+ $('#order_' + id + '_title').remove();
+        $('#order_' + id + '_content').remove();
+               
+           }
 
 });
+    window.addEventListener('order_created_new', function (e) { 
 
+           if(e.detail.status=='canceled')
+           {
+ $('#order_' + id + '_title').remove();
+        $('#order_' + id + '_content').remove();
+               
+           }
+
+});
 
 }
 

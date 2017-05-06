@@ -25,6 +25,12 @@ App.Channels.Orders.subscribe = function() {
 
            
         }
+         else if(data.action=='create'){
+                 event=new CustomEvent('order_create_new',{'detail':data.order});
+                 window.dispatchEvent(event);
+
+           
+        }
         }
     });
 }
