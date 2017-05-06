@@ -1,0 +1,98 @@
+<h1>Checks</h1>
+<h1 class="header">Checks</h1>
+<div class="ui form">
+  <div class="three fields">
+    <div class="inline field">
+      <label>User</label>
+      <input type="text" placeholder="First Name">
+    </div>
+    <div class="inline field">
+      <label>Middle name</label>
+      <input type="date" placeholder="Middle Name">
+    </div>
+    <div class="inline field">
+      <label>Last name</label>
+      <input type="date" placeholder="Last Name">
+    </div>
+  </div>
+</div>
+<div class="ui styled fluid accordion">
+  <% @users.each do |user| %>
+      <div class="title active">
+        <i class="dropdown icon"></i>
+        <div class="ui horizontal list">
+          <div class="item">
+            <i class="user icon"></i>
+            <div class="content">
+              <div class="header"><%= user.email %></div>
+            </div>
+          </div>
+          <div class="item">
+            <i class="pound icon"></i>
+            <div class="content">
+              <div class="ui red tag large label"><%= user.orders_total %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content active">
+        <div class="accordion">
+          <% user.orders.each do |order| %>
+              <div class="title">
+                <i class="dropdown icon"></i>
+                <div class="ui horizontal list">
+                  <div class="item">
+                    <i class="wait large icon"></i>
+                    <div class="content">
+                      <div class="header"><%= time_ago_in_words(order.created_at) %></div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <i class="marker large icon"></i>
+                    <div class="content">
+                      <div class="header"><%= order.room.name %></div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <i class="volume control phone large icon"></i>
+                    <div class="content">
+                      <div class="header"><%= order.user.ext %></div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <i class="pound large red icon"></i>
+                    <div class="content">
+                      <div class="ui red tag large label"><%= number_to_currency(order.total, unit:"") %></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ui right floated large buttons">
+                  <button class="ui circular green button">
+                    <i class="check icon"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="content">
+                <div class="ui six column grid">
+                  <% for p in order.orders_products %>
+                      <div class="column">
+                        <div class="ui fluid card">
+                          <div class="image">
+                            <div class="ui red big ribbon label">
+                              <i class="hashtag icon"></i> <%= p.amount %>
+                            </div>
+                            <img src="http://lorempixel.com/200/200/">
+                          </div>
+                          <div class="content">
+                            <a class="header"><%= p.product.name %></a>
+                          </div>
+                        </div>
+                      </div>
+                  <% end %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+</div>

@@ -22,6 +22,27 @@ class OrdersController < ApplicationController
     end
   end
 
+  # GET /checks
+  # GET /checks.json
+  def checks
+    @users = User.includes([orders: [orders_products: :product]])
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: @users,
+               :include => {
+                   :orders =>{
+                       :include => {
+                           :orders_products => {:include => [:product]}
+                       },
+                       :methods => :total
+                   }
+               },
+               :methods => :orders_total
+      }
+    end
+  end
+
   # GET /orders/1
   # GET /orders/1.json
   def show
