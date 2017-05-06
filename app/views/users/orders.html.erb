@@ -1,0 +1,86 @@
+<h1>My Orders
+  <div class="ui red tag large label">
+    <i class="pound icon"></i>
+    <%= number_to_currency(@user.orders_total, unit:"") %>
+  </div>
+</h1>
+
+<div class="ui styled fluid accordion">
+  <% @user.orders.each do |order| %>
+      <div class="title">
+        <i class="dropdown icon"></i>
+        <div class="ui big horizontal list">
+          <div class="item">
+            <i class="wait large icon"></i>
+            <div class="content">
+              <div class="header"><%= time_ago_in_words(order.created_at) %></div>
+            </div>
+          </div>
+          <div class="item">
+            <i class="marker large icon"></i>
+            <div class="content">
+              <div class="header"><%= order.room.name %></div>
+            </div>
+          </div>
+          <div class="item">
+            <i class="tag large red icon"></i>
+            <div class="content">
+              <% if order.status == "pending" %>
+                  <div class="ui large label">
+                    <i class="wait icon"></i> <%= order.status.humanize %>
+                  </div>
+              <% elsif order.status == "processing" %>
+                  <div class="ui large blue label">
+                    <i class="settings icon"></i> <%= order.status.humanize %>
+                  </div>
+              <% elsif order.status == "completed" %>
+                  <div class="ui large green label">
+                    <i class="check icon"></i> <%= order.status.humanize %>
+                  </div>
+              <% elsif order.status == "canceled" %>
+                  <div class="ui large red label">
+                    <i class="remove icon"></i> <%= order.status.humanize %>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="item">
+            <i class="pound large red icon"></i>
+            <div class="content">
+              <div class="ui red tag large label">
+                <i class="pound icon"></i>
+                <%= number_to_currency(order.total, unit:"") %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% if order.status == "pending" %>
+            <div class="ui right floated large buttons">
+              <button class="ui red button">
+                <i class="remove icon"></i>
+                Cancel
+              </button>
+            </div>
+        <% end%>
+      </div>
+      <div class="content">
+        <div class="ui six column grid">
+          <% for p in order.orders_products %>
+              <div class="column">
+                <div class="ui fluid card">
+                  <div class="image">
+                    <div class="ui red big ribbon label">
+                      <i class="hashtag icon"></i> <%= p.amount %>
+                    </div>
+                    <img src="http://lorempixel.com/200/200/">
+                  </div>
+                  <div class="content">
+                    <a class="header"><%= p.product.name %></a>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+</div>
