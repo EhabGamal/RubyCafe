@@ -19,6 +19,7 @@ App.Channels.Orders.subscribe = function() {
         received: function (data) {
             // Called when there's incoming data on the websocket for this channel
             console.log("data from orders channel")
+            console.log(data)
              if(data.action=='update'){
                  event=new CustomEvent('order_updated_state',{'detail':data.order});
                  window.dispatchEvent(event);

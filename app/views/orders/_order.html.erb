@@ -1,0 +1,62 @@
+<div class="title" id="order_<%=order.id%>_title">
+  <i class="dropdown icon"></i>
+  <div class="ui large horizontal list">
+    <div class="item">
+      <i class="wait large icon"></i>
+      <div class="content">
+        <div class="header"><%= time_ago_in_words(order.created_at) %></div>
+      </div>
+    </div>
+    <div class="item">
+      <i class="user large icon"></i>
+      <div class="content">
+        <div class="header"><%= order.user.email %></div>
+      </div>
+    </div>
+    <div class="item">
+      <i class="marker large icon"></i>
+      <div class="content">
+        <div class="header"><%= order.room.name %></div>
+      </div>
+    </div>
+    <div class="item">
+      <i class="volume control phone large icon"></i>
+      <div class="content">
+        <div class="header"><%= order.user.ext %></div>
+      </div>
+    </div>
+    <div class="item">
+      <i class="pound large red icon"></i>
+      <div class="content">
+        <div class="ui red tag large label"><%= number_to_currency(order.total, unit:"") %></div>
+      </div>
+    </div>
+  </div>
+  <div class="ui right floated large buttons">
+    <%= order.status %>
+    <% if order.status=='pending' %>
+        <button class="ui red button startorder" data-itemid=<%=order.id%> >Start</button>
+    <% else %>
+        <button class="ui positive button endorder" data-itemid=<%=order.id%> >Done</button>
+    <%end%>
+  </div>
+</div>
+<div class="content" id="order_<%=order.id%>_content">
+  <div class="ui six column grid">
+    <% for p in order.orders_products %>
+        <div class="column">
+          <div class="ui fluid card">
+            <div class="image">
+              <div class="ui red big ribbon label">
+                <i class="hashtag icon"></i> <%= p.amount %>
+              </div>
+              <img src="<%= p.product.image_url %>">
+            </div>
+            <div class="content">
+              <a class="header"><%= p.product.name %></a>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
