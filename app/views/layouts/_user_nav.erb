@@ -4,8 +4,9 @@
     <a class="active item" href="/">Home</a>
     <a class="item" href="<%= orders_for_user_path current_user%>">My Orders</a>
     <div class="right menu">
+      <a href="#" class="item"><img src="<%= current_user.avatar.url(:thumb)%>" alt="" class="ui circular mini image"></a>
       <a href="#" class="item"><%= current_user.email %></a>
-      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'ui red button' %>
+      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'item' %>
     </div>
   </div>
 </div>

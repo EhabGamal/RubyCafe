@@ -6,8 +6,9 @@
     <a class="item" href="<%= users_path %>">Users</a>
     <a class="item" href="<%= new_order_url %>">Manual Order</a>
     <div class="right menu">
+      <a href="#" class="item"><img src="<%= current_user.avatar.url(:thumb)%>" alt="" class="ui circular mini image"></a>
       <a href="<%= user_path current_user %>" class="item"><%= current_user.email %></a>
-      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'ui red button' %>
+      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'item' %>
     </div>
   </div>
 </div>
