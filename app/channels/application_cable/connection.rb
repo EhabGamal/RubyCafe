@@ -5,9 +5,6 @@ module ApplicationCable
     def connect
       self.current_user = find_verified_user
     end
-    def session
-      cookies.encrypted[Rails.application.config.session_options[:key]]
-    end
 
     protected
 

@@ -1,31 +1,43 @@
-<p id="notice"><%= notice %></p>
+<div class="ui piled segment">
+  <div class="ui header"><%= @user.name%></div>
+  <div class="ui centered two column grid">
+    <div class="center aligned column">
+      <div class="ui tall stacked segment">
+        <img src="<%= @user.avatar.url %>" alt="" class="ui medium centered rounded image">
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui tall stacked segment">
+        <div class="ui two column grid">
+          <div class="column">
+            <div class="ui small statistic">
+              <div class="label">Orders</div>
+              <div class="value">
+                <i class="numeric icon"></i>
+                <span> <%= @user.orders.count %> </span>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="ui small statistic">
+              <div class="label">Email</div>
+              <div class="value">
+                <i class="envelope icon"></i>
+                <span> <%= @user.email %> </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ui header">Room: <%= link_to @user.room.name,@user.room %></div>
+        <div class="ui header">Ext: <%= @user.ext %></div>
+        <% if current_user.isadmin %>
+            <div class="ui two buttons">
+              <%= link_to 'Edit', edit_user_path(@product),class: "ui primary button" %> |
+              <%= link_to 'Back', users_path,class: "ui basic blue button" %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>Room:</strong>
-  <%= @user.room %>
-</p>
-
-<p>
-  <strong>Ext:</strong>
-  <%= @user.ext %>
-</p>
-<%= image_tag @user.avatar.url %>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
