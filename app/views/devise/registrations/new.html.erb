@@ -1,49 +1,46 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name),html: { multipart: true ,:class => "ui large form"}) do |f| %>
-  <%= devise_error_messages! %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {multipart: true, :class => "ui large form"}) do |f| %>
+    <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+    <div class="field">
+      <%= f.label :email %><br/>
+      <%= f.email_field :email, autofocus: true %>
+    </div>
 
-<div class="field">
-    <%= f.label :room_id %>
-    <%= f.text_field :room_id %>
-  </div>
+    <div class="field">
+      <%= f.label :room_id %>
+      <%= f.select(:room_id, Room.all.collect {|c| [c.name, c.id]}) %>
+    </div>
 
+    <div class="field">
+      <%= f.label :avatar %>
 
-  <div class="field">
-    <%= f.label :avatar %>
-
-
-
-<%= f.file_field :avatar %>
-</div> 
+      <%= f.file_field :avatar %>
+    </div>
 
 
-  <div class="field">
-    <%= f.label :ext %>
-    <%= f.text_field :ext %>
-  </div>
+    <div class="field">
+      <%= f.label :ext %>
+      <%= f.text_field :ext %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+    <div class="field">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br/>
+      <%= f.password_field :password, autocomplete: "off" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+    <div class="field">
+      <%= f.label :password_confirmation %><br/>
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up",class:"ui primary button" %>
-  </div>
+    <div class="actions">
+      <%= f.submit "Sign up", class: "ui primary button" %>
+    </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
