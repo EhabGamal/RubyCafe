@@ -2,6 +2,7 @@
 require 'json'
 
 class OrdersController < ApplicationController
+  before_action :check_access,:except => :new
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   # GET /orders
@@ -117,5 +118,9 @@ class OrdersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def order_params
     params.require(:order).permit(:status, :note, :user_id, :room_id, :product_ids=>[])
+  end
+  protected
+  def check_access
+    redirect_to :root, :flash => { :error => "you are not authorized to access" } and return unless current_user.isadmin
   end
 end

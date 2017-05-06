@@ -1,4 +1,5 @@
 class RoomsController < ApplicationController
+  before_action :check_access
   semantic_breadcrumb "Rooms", :rooms_path
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
@@ -76,4 +77,8 @@ class RoomsController < ApplicationController
     def room_params
       params.require(:room).permit(:name, :address)
     end
+  protected
+  def check_access
+    redirect_to :root, :flash => { :error => "you are not authorized to access" } and return unless current_user.isadmin
+  end
 end

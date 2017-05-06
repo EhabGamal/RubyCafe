@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :check_access,:except => :all
   semantic_breadcrumb "Products", :products_path
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
@@ -83,4 +84,8 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(:name, :price, :category_id, :available, :description,:image)
     end
+  protected
+  def check_access
+    redirect_to :root, :flash => { :error => "you are not authorized to access" } and return unless current_user.isadmin
+  end
 end
