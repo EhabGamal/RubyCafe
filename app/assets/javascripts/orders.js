@@ -439,8 +439,8 @@ if($(".orders.index").length>0){
 
            if(e.detail.status=='canceled')
            {
- $('#order_' + id + '_title').remove();
-        $('#order_' + id + '_content').remove();
+ $('#order_' + e.detail.id + '_title').remove();
+        $('#order_' + e.detail.id + '_content').remove();
                
            }
 
