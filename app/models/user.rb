@@ -7,4 +7,9 @@ class User < ApplicationRecord
   validates_attachment :avatar, content_type: {content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"]}
 
   belongs_to :room
+  has_many :orders
+
+  def orders_total
+    self.orders.sum(&:total)
+  end
 end
