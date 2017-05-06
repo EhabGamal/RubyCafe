@@ -30,6 +30,13 @@
       <%= f.label :ext %>
       <%= f.text_field :ext %>
     </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <%= f.check_box :isadmin %>
+        <%= f.label "Admin" %>
+      </div>
+
+    </div>
     <% if user.errors.any? %>
         <div class="ui error message" style="display: block">
           <div class="header"><%= pluralize(user.errors.count, "error") %> prohibited this user from being
