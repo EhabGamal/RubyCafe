@@ -5,7 +5,7 @@
   </div>
 </h1>
 
-<div class="ui styled fluid accordion">
+<div class="mainmyorddiv ui styled fluid accordion">
   <% @user.orders.each do |order| %>
       <div class="title">
         <i class="dropdown icon"></i>
@@ -26,20 +26,20 @@
             <i class="tag large red icon"></i>
             <div class="content">
               <% if order.status == "pending" %>
-                  <div class="ui large label">
-                    <i class="wait icon"></i> <%= order.status.humanize %>
+                  <div class="ui large label" id="order_stat_<%=order.id%>">
+                    <i class="wait icon"></i> <span > <%= order.status.humanize %> </span>
                   </div>
               <% elsif order.status == "processing" %>
-                  <div class="ui large blue label">
-                    <i class="settings icon"></i> <%= order.status.humanize %>
+                  <div class="ui large blue label" id="order_stat_<%=order.id%>" >
+                    <i class="settings icon"></i> <span > <%= order.status.humanize %> </span>
                   </div>
               <% elsif order.status == "completed" %>
-                  <div class="ui large green label">
-                    <i class="check icon"></i> <%= order.status.humanize %>
+                  <div class="ui large green label" id="order_stat_<%=order.id%>">
+                    <i class="check icon"></i> <span> <%= order.status.humanize %> </span>
                   </div>
               <% elsif order.status == "canceled" %>
-                  <div class="ui large red label">
-                    <i class="remove icon"></i> <%= order.status.humanize %>
+                  <div class="ui large red label" id="order_stat_<%=order.id%>" >
+                    <i class="remove icon"></i> <span> <%= order.status.humanize %> </span>
                   </div>
               <% end %>
             </div>
@@ -55,8 +55,8 @@
           </div>
         </div>
         <% if order.status == "pending" %>
-            <div class="ui right floated large buttons">
-              <button class="ui red button">
+            <div id="cancel_ord_<%=order.id%>" class="canceldiv ui right floated large buttons">
+              <button class="ui red button" data-tordid=<%=order.id%> >
                 <i class="remove icon"></i>
                 Cancel
               </button>

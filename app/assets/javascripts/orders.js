@@ -1,5 +1,5 @@
-jQuery(document).on("turbolinks:load",function () {
-    if(!$(".orders.index").length > 0){
+jQuery(document).on("turbolinks:load", function () {
+    if (!$(".orders.index").length > 0) {
         return
     }
     App.Channels.Orders.subscribe()
@@ -64,9 +64,10 @@ jQuery(document).ready(function () {
             return false
         }
         this.removeproduct = function (prodid) {
-if(this.productsids[prodid])
-         {   delete this.productsids[prodid]
-            return true}
+            if (this.productsids[prodid]) {
+                delete this.productsids[prodid]
+                return true
+            }
             return false
 
 
@@ -109,32 +110,31 @@ if(this.productsids[prodid])
 
         }
         this.removeproductflist = function (product) {
-            
+
             this.products = this.products.filter((val, ind) => val.id != product.id)
-             
+
             $('#orderitem_' + product.id).remove()
-            if(self.corder.productvalue(product.id))
-            self.settotal(-locatelm.price * self.corder.productvalue(product.id))
+            if (self.corder.productvalue(product.id))
+                self.settotal(-locatelm.price * self.corder.productvalue(product.id))
             self.corder.removeproduct(product.id);
             this.buildproducts();
 
         }
         this.replaceproductilist = function (product) {
-           var ind= this.products.findIndex((elm) => elm.id == product.id)
-           console.log(ind);
+            var ind = this.products.findIndex((elm) => elm.id == product.id)
+            console.log(ind);
             this.products[ind] = product;
-            if (product.available == false)
-                {
+            if (product.available == false) {
                 locatelm = self.products.find((elem, ind) => elem.id == product.id)
-            $('#orderitem_' + product.id).remove()
-            if(self.corder.productvalue(product.id))
-            self.settotal(-locatelm.price * self.corder.productvalue(product.id))
-            self.corder.removeproduct(product.id);
+                $('#orderitem_' + product.id).remove()
+                if (self.corder.productvalue(product.id))
+                    self.settotal(-locatelm.price * self.corder.productvalue(product.id))
+                self.corder.removeproduct(product.id);
 
 
 
 
-                }
+            }
             console.log(product)
             this.buildproducts();
 
@@ -231,11 +231,11 @@ if(this.productsids[prodid])
         this.templates = {
             producttemplate: repl`<div id=${'id'} class="column ">
             <div class=" ${'avalible'} ui fluid card" >
-              <a class="prdadd ui red corner label" data-prodid=${'id'}>
+              <a class="prdadd ui ${'color'} corner label" data-prodid=${'id'}>
                 <i class="add icon"></i>
               </a>
               <div class="image">
-                <div class="ui red big ribbon label">
+                <div class="ui ${'color'} big ribbon label">
                   <i class="pound icon"></i> ${'price'}
                 </div>
                 <img src="${'image'}">
@@ -282,7 +282,7 @@ if(this.productsids[prodid])
             $(this.sources.products).empty()
             var productstobe = this.filteredproducts();
             productstobe.forEach((elem, indx) => {
-                $(this.sources.products).append(this.templates.producttemplate({ 'name': elem.name, 'price': elem.price, 'image': elem.image_url, 'id': 'productlist_' + elem.id, 'avalible': elem.available ? 'isavalible' : 'unavalible' }))
+                $(this.sources.products).append(this.templates.producttemplate({ 'name': elem.name, 'price': elem.price, 'image': elem.image_url, 'id': 'productlist_' + elem.id, 'avalible': elem.available ? 'isavalible' : 'unavalible', color: elem.available ? 'red' : '' }))
 
 
 
