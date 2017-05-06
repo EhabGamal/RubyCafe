@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
                :include => {
                    :user =>{:only => [:email,:ext]},
                    :room => {:only => [:name]},
-                   :orders_products => {:include => [:product]}
+                   :orders_products => {:include => [:product => {:methods => :image_url}]}
                },
                :methods => [:total]
       }
@@ -73,7 +73,8 @@ class OrdersController < ApplicationController
       end
       OrdersProduct.create!(order_products)
     end
-    ActionCable.server.broadcast "orders:#{current_user.id}",{order:@order,action:"create"}
+    html = ApplicationController.render :partial => 'orders/order', :locals => { :order => @order }
+    ActionCable.server.broadcast "orders:#{current_user.id}",{order:@order,action:"create",html: html}
     respond_to do |format|
       format.html { redirect_to @order, notice: 'Order was successfully created.' }
       format.json { render :show, status: :created, location: @order }

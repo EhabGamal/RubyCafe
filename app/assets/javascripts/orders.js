@@ -1,8 +1,8 @@
 jQuery(document).on("turbolinks:load", function () {
-    if (!$(".orders.index").length > 0) {
-        return
+    if ($(".orders.index").length == 0) {
+         App.Channels.Orders.subscribe()
     }
-    App.Channels.Orders.subscribe()
+   
 });
 
 var arr;
@@ -428,12 +428,29 @@ jQuery(document).ready(function () {
     $(".mainorddiv").on("click", '.startorder', todone)
     $(".mainorddiv").on("click", '.endorder', tocompleted)
 
+console.log("KKK",$(".orders.index").length)
+if($(".orders.index").length>0){
+     App.Channels.Orders.subscribe()
+    console.log("slimshady");
+    window.addEventListener('order_updated_state', function (e) { 
 
+           if(e.detail.status=='canceled')
+           {
+ $('#order_' + id + '_title').remove();
+        $('#order_' + id + '_content').remove();
+               
+           }
 
+});
+    window.addEventListener('order_create_new', function (e) { 
+console.log("Jezebel")
+      
+ $('.mainorddiv').append(e.detail.html);
+   //     $('#order_' + id + '_content').remove();
+          
+});
 
-
-
-
+}
 
 
 
