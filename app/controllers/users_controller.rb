@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :check_access ,:except => :orders
   semantic_breadcrumb "Users", :users_path
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -101,4 +102,8 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :password, :room_id, :ext,:avatar)
     end
+  protected
+  def check_access
+    redirect_to :root, :flash => { :error => "you are not authorized to access" } and return unless current_user.isadmin
+  end
 end
