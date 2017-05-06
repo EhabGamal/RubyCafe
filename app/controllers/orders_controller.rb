@@ -2,7 +2,7 @@
 require 'json'
 
 class OrdersController < ApplicationController
-  before_action :check_access,:except => :new
+  before_action :check_access,:except => [:new,:create,:update]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   # GET /orders
