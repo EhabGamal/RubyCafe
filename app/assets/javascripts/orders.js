@@ -19,7 +19,7 @@ function repl(strings, ...keys) {
     });
 }
 
-
+var main_manager;
 
 jQuery(document).ready(function () {
     var order = new function () {
@@ -57,8 +57,10 @@ jQuery(document).ready(function () {
             return false
         }
         this.removeproduct = function (prodid) {
-
-            delete this.productsids[prodid]
+if(this.productsids[prodid])
+         {   delete this.productsids[prodid]
+            return true}
+            return false
 
 
 
@@ -71,7 +73,7 @@ jQuery(document).ready(function () {
             return this.productsids[prodid]
         }
     }
-    var main_manager = new function (order, products, category, searchterms) {
+    main_manager = new function (order, products, category, searchterms) {
         this.products = products || [];
         this.category = category || "";
         this.searchterms = searchterms || "";
@@ -93,15 +95,52 @@ jQuery(document).ready(function () {
             this.buildproducts();
 
         }
+        this.addproducttlist = function (product) {
+            this.products.push(product)
+            this.products = this.products.sort(idsort);
+            this.buildproducts();
+
+        }
+        this.removeproductflist = function (product) {
+            
+            this.products = this.products.filter((val, ind) => val.id != product.id)
+             
+            $('#orderitem_' + product.id).remove()
+            if(self.corder.productvalue(product.id))
+            self.settotal(-locatelm.price * self.corder.productvalue(product.id))
+            self.corder.removeproduct(product.id);
+            this.buildproducts();
+
+        }
+        this.replaceproductilist = function (product) {
+           var ind= this.products.findIndex((elm) => elm.id == product.id)
+           console.log(ind);
+            this.products[ind] = product;
+            if (product.available == false)
+                {
+                locatelm = self.products.find((elem, ind) => elem.id == product.id)
+            $('#orderitem_' + product.id).remove()
+            if(self.corder.productvalue(product.id))
+            self.settotal(-locatelm.price * self.corder.productvalue(product.id))
+            self.corder.removeproduct(product.id);
+
+
+
+
+                }
+            console.log(product)
+            this.buildproducts();
+
+        }
         this.filteredproducts = function () {
 
             var searchboxval = $(this.sources.searchbox).val()
             var selectedcategories = $(this.sources.categories).val()
-            console.log(selectedcategories)
+            //console.log(selectedcategories)
 
             fil = this.products.filter((val, ind) => val.name.match(new RegExp(searchboxval, 'i')) && (selectedcategories ? selectedcategories.indexOf(String(val.category_id)) != -1 : true))
 
-            console.log(fil.length)
+            //console.log(fil.length)
             return fil;
 
 
@@ -114,21 +153,21 @@ jQuery(document).ready(function () {
 
         }
         this.addproduct = function () {
-            console.log(this)
+            //console.log(this)
             prodid = String($(this).data('prodid')).match(/[0-9]+$/)[0]
             locatelm = self.products.find((elem, ind) => elem.id == prodid)
-            console.log(prodid);
+            //console.log(prodid);
 
             if (self.corder.addproduct(prodid)) {
 
 
-                console.log(locatelm);
+                //console.log(locatelm);
                 $(self.sources.manager).children('tbody').append(self.templates.newitemorder({ 'name': locatelm.name, 'image': locatelm.image_url, 'id': 'orderitem_' + locatelm.id, 'numid': prodid }))
 
 
             }
             else {
-                console.log("kofta", $('#noofitem_' + locatelm.id))
+                //console.log("kofta", $('#noofitem_' + locatelm.id))
                 $('#noofitem_' + locatelm.id).val(self.corder.productvalue(prodid))
 
 
@@ -139,7 +178,7 @@ jQuery(document).ready(function () {
 
         }
         this.submithandler = function (event) {
-            console.log("IN")
+            //console.log("IN")
             function getmintemp(main) {
                 return innertemp = function (key, value, isArray = false) {
                     this.name = `${main}[${key}]` + (isArray ? "[]" : "");
@@ -155,10 +194,10 @@ jQuery(document).ready(function () {
             // mainform.push(new ordertemp('note',''))
             mainform.push(new ordertemp('status', 'pending'))
             ids = self.corder.productids();
-            console.log(self.corder)
-            console.log(ids);
+            //console.log(self.corder)
+            //console.log(ids);
             ids.forEach((val, indx) => { mainform.push(new ordertemp('product_ids', JSON.stringify({ id: val, size: self.corder.productvalue(val) }), true)) })
-            console.log(mainform)
+            //console.log(mainform)
             $.post('/orders', mainform)
 
 
@@ -236,7 +275,7 @@ jQuery(document).ready(function () {
             $(this.sources.products).empty()
             var productstobe = this.filteredproducts();
             productstobe.forEach((elem, indx) => {
-                $(this.sources.products).append(this.templates.producttemplate({ 'name': elem.name, 'price': elem.price, 'image': elem.image_url, 'id': 'productlist_' + elem.id, 'avalible': elem.available ? 'isavalible' : '' }))
+                $(this.sources.products).append(this.templates.producttemplate({ 'name': elem.name, 'price': elem.price, 'image': elem.image_url, 'id': 'productlist_' + elem.id, 'avalible': elem.available ? 'isavalible' : 'unavalible' }))
 
 
 
@@ -251,21 +290,21 @@ jQuery(document).ready(function () {
 
 
         {
-            console.log(this)
-            $(this.sources.products).on("click", '.isavalible .prdadd', this.addproduct)//function (hey) { console.log(hey.target,"THIS IS ",this.target) }.bind());
+            //console.log(this)
+            $(this.sources.products).on("click", '.isavalible .prdadd', this.addproduct)//function (hey) { //console.log(hey.target,"THIS IS ",this.target) }.bind());
             $(this.sources.manager).on("click", '.addp', this.addproduct)
             $(this.sources.manager).on("click", '.minusp', this.decrmproduct)
             $(this.sources.manager).on("click", '.removeord', this.removeproduct)
             // $(this.sources.products).on("click", '.isavalible .prdadd', this.addproduct)
             $(this.sources.searchbox).on('input', this.buildproducts.bind(this))
             $(this.sources.categories).change(this.buildproducts.bind(this))
-            console.log($(this.sources.products))
+            //console.log($(this.sources.products))
             $(this.sources.submitbutton).click(this.submithandler)
 
-            //console.log(this.templates.producttemplate({'name':'kkk','price':'23','image':'kkk'}))
+            ////console.log(this.templates.producttemplate({'name':'kkk','price':'23','image':'kkk'}))
 
 
-            console.log("IN")
+            //console.log("IN")
 
 
 
@@ -280,12 +319,12 @@ jQuery(document).ready(function () {
     $.ajax({
         url: "/products.json",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             arr = data.products
             main_manager.setproducts(data.products);
         },
         error: function (error) {
-            console.log(error);
+            //console.log(error);
         }
     });
 
@@ -323,11 +362,11 @@ jQuery(document).ready(function () {
 
     }
 
-    console.log("LLLL")
+    //console.log("LLLL")
     function sucesscallback(itemt) {
-         console.log(itemt);
-        // console.log("AGAAAIAN")
-        console.log("HI");
+        //console.log(itemt);
+        // //console.log("AGAAAIAN")
+        //console.log("HI");
         $(itemt).replaceWith($(temps.endbtn({ 'id': $(itemt).data('itemid') })))
 
 
@@ -338,8 +377,8 @@ jQuery(document).ready(function () {
     function completecallback(itemt) {
 
         var id = $(itemt).data('itemid')
-console.log(id);
-        $('#order_'+ id + '_title').remove();
+        //console.log(id);
+        $('#order_' + id + '_title').remove();
         $('#order_' + id + '_content').remove();
 
 
@@ -349,9 +388,9 @@ console.log(id);
 
 
 
-    function changeorderstate(id, state, callback,itemt) {
+    function changeorderstate(id, state, callback, itemt) {
 
-        console.log("INCH", id, state)
+        //console.log("INCH", id, state)
         $.ajax({
             type: "PUT",
             url: `/orders/${id}.json`,
@@ -366,43 +405,21 @@ console.log(id);
 
     }
     function todone() {
-        console.log("INDONE")
-        changeorderstate($(this).data('itemid'), 'processing', sucesscallback,this)
+        //console.log("INDONE")
+        changeorderstate($(this).data('itemid'), 'processing', sucesscallback, this)
 
 
 
     }
     function tocompleted() {
-        console.log("COMPLETED")
-        changeorderstate($(this).data('itemid'), 'completed', completecallback,this)
+        //console.log("COMPLETED")
+        changeorderstate($(this).data('itemid'), 'completed', completecallback, this)
     }
 
 
 
     $(".mainorddiv").on("click", '.startorder', todone)
     $(".mainorddiv").on("click", '.endorder', tocompleted)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -427,7 +444,7 @@ console.log(id);
         url: "/orders.json",
         success: function (data) {
             ordersList = data;
-            console.log(ordersList);
+            //console.log(ordersList);
             temp = repl`
             <div class="item">
               <i class="${'icon'} large icon"></i>
@@ -437,11 +454,11 @@ console.log(id);
             </div>
             `;
             orderHeaders.forEach((val) => {
-                console.log(temp({ icon: val.icon, key: Object.byString(ordersList[0], val.key) }))
+                //console.log(temp({ icon: val.icon, key: Object.byString(ordersList[0], val.key) }))
             })
         },
         error: function (error) {
-            console.log(error);
+            //console.log(error);
         }
     });
 });

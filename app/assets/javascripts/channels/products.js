@@ -9,6 +9,7 @@ App.Channels.Products.subscribe = function() {
         connected: function() {
             // Called when the subscription is ready for use on the server
             console.log("connected");
+            console.log( main_manager)
         },
 
         disconnected: function() {
@@ -18,6 +19,12 @@ App.Channels.Products.subscribe = function() {
         received: function(data) {
             // Called when there's incoming data on the websocket for this channel
             console.log(data);
+           if(data.action=='update'){
+
+main_manager.replaceproductilist(data.product)
+
+           }
+          //  main_manager.
         }
     });
 }

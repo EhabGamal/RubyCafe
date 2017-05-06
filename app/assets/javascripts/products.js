@@ -24,6 +24,8 @@ jQuery(document).on("turbolinks:before-cache", function() {
 });
 
 jQuery(document).on("turbolinks:load",function () {
+     if($(".orders.new").length > 0)
+             App.Channels.Products.subscribe()
     if(!$(".products.index").length > 0){
         return
     }
@@ -41,7 +43,7 @@ jQuery(document).on("turbolinks:load",function () {
         $('.ui.checkbox').checkbox();
     });
 
-    App.Channels.Products.subscribe()
+ 
 });
 function toggle_available(toggle) {
     var productId=toggle.dataset.id;
