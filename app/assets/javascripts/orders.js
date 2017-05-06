@@ -1,8 +1,8 @@
 jQuery(document).on("turbolinks:load", function () {
-    if (!$(".orders.index").length > 0) {
-        return
+    if ($(".orders.index").length == 0) {
+         App.Channels.Orders.subscribe()
     }
-    App.Channels.Orders.subscribe()
+   
 });
 
 var arr;
@@ -429,11 +429,15 @@ jQuery(document).ready(function () {
     $(".mainorddiv").on("click", '.endorder', tocompleted)
 
 
+if($(".mainorddiv").length>0){
+window.addEventListener('order_updated_state', function (e) { 
+
+console.log('updated')
+
+});
 
 
-
-
-
+}
 
 
 
