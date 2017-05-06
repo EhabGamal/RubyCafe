@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
                :include => {
                    :user =>{:only => [:email,:ext]},
                    :room => {:only => [:name]},
-                   :orders_products => {:include => [:product]}
+                   :orders_products => {:include => [:product => {:methods => :image_url}]}
                },
                :methods => [:total]
       }

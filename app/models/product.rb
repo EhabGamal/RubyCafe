@@ -10,4 +10,8 @@ class Product < ApplicationRecord
   before_destroy -> {ProductRelayJob.perform_later(self, "destroy")}
   validates :name, :price, :category_id, presence: true
   validates :name, uniqueness: true
+
+  def image_url
+    self.image.url
+  end
 end
