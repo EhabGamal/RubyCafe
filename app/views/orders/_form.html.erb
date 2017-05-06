@@ -43,10 +43,10 @@
   <div  class="ten wide column">
     <div class="ui form">
       <div class="three fields">
-        <div class="field">
+        <div class="field" <% if !current_user.isadmin %>style="display: none"<% end %>>
           <%= form_for(order,:html => { :id => "userform" }) do |f| %>
               <%= f.label :user_id %>
-              <%= f.select :user_id , options_for_select(User.all.map{|r|[r.email, r.id]}) %>
+              <%= f.select :user_id , options_for_select(User.all.map{|r|[r.email, r.id]}, selected: current_user.id) %>
           <% end %>
         </div>
         <div class="field">
