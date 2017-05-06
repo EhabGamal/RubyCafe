@@ -12,6 +12,27 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/orders
+  # GET /users/orders.json
+  def orders
+    @user = User.includes([orders: [orders_products: :product]]).find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: @user,
+               :include => {
+                   :orders =>{
+                       :include => {
+                           :orders_products => {:include => [:product]}
+                       },
+                       :methods => :total
+                   }
+               },
+               :methods => :orders_total
+      }
+    end
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show
