@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
     end
   end
   def all
-    @products = Product.all.select("id, name, price,available,category_id,description")
+    @products = Product.all
     render json: {:success=>true, :message=>"List of all products",:products=>@products.map {|u| u.attributes.merge(:image_url => u.image.url)}}, :status=>200
   end
   # GET /products/1
