@@ -74,7 +74,10 @@ class OrdersController < ApplicationController
       OrdersProduct.create!(order_products)
     end
     html = ApplicationController.render :partial => 'orders/order', :locals => { :order => @order }
-    ActionCable.server.broadcast "orders:#{current_user.id}",{order:@order,action:"create",html: html}
+    ActionCable.server.broadcast "orders:#{@order.user_id}",{order:@order,action:"create",html: html}
+    User.where(isadmin: 1).each do |admin|
+      ActionCable.server.broadcast "orders:#{admin.id}",{order:@order,action:"create",html: html}
+    end
     respond_to do |format|
       format.html { redirect_to root_path, notice: 'Order was successfully created.' }
       format.json { render :show, status: :created, location: @order }
