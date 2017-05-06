@@ -1,28 +1,25 @@
 Rails.application.routes.draw do
 
 
-
-devise_for :users, skip: [:sessions,:registrations]
-as :user do
-  get 'login', to: 'devise/sessions#new', as: :new_user_session
-  post 'login', to: 'devise/sessions#create', as: :user_session
-  delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
-  get "/sign_up" => "devise/registrations#new", as: "new_user_registration" # custom path to 
-    post  "/sign_up" => "devise/registrations#create" ,as:   'user_registration'
-end
-resources :users do
-  member do
-    get 'orders'
+  devise_for :users, skip: [:sessions, :registrations]
+  as :user do
+    get 'login', to: 'devise/sessions#new', as: :new_user_session
+    post 'login', to: 'devise/sessions#create', as: :user_session
+    delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
+    get '/sign_up' => 'devise/registrations#new', as: :new_user_registration # custom path to
+    post '/sign_up' => 'devise/registrations#create', as: :user_registration
   end
-end
- get 'products', to: 'products#all', as: :products_for_user
-resources :users
-  # resources :products, only: [:index, :show]
-  # resources :categories, only: [:index, :show]
+# resources :users do
+#   member do
+#     get 'orders'
+#   end
+# end
+  get 'users/:id/orders', to: 'users#orders'
+  get :products, to: 'products#all', as: :products_for_user
 
   resources :orders
   scope 'admin' do
-    resources :categories, :products, :users,:rooms
+    resources :categories, :products, :users, :rooms
     get 'checks', to: 'orders#checks', as: :orders_checks
   end
   root :to => 'pages#index'

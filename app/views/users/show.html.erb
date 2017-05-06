@@ -1,5 +1,13 @@
 <div class="ui piled segment">
-  <div class="ui header"><%= @user.name%></div>
+  <div class="ui two columns grid">
+    <div class="column">
+      <div class="ui header"><i class="user icon"></i> <%= @user.name%></div>
+    </div>
+    <div class="column">
+      <div class="ui header"><i class="envelope icon"></i> <%= @user.email %></div>
+    </div>
+  </div>
+
   <div class="ui centered two column grid">
     <div class="center aligned column">
       <div class="ui tall stacked segment">
@@ -18,21 +26,12 @@
               </div>
             </div>
           </div>
-          <div class="column">
-            <div class="ui small statistic">
-              <div class="label">Email</div>
-              <div class="value">
-                <i class="envelope icon"></i>
-                <span> <%= @user.email %> </span>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="ui header">Room: <%= link_to @user.room.name,@user.room %></div>
         <div class="ui header">Ext: <%= @user.ext %></div>
         <% if current_user.isadmin %>
             <div class="ui two buttons">
-              <%= link_to 'Edit', edit_user_path(@product),class: "ui primary button" %> |
+              <%= link_to 'Edit', edit_user_path(@user),class: "ui primary button" %> |
               <%= link_to 'Back', users_path,class: "ui basic blue button" %>
 
             </div>
